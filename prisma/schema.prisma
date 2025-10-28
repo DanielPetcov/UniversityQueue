@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model User {
+  id String @id @default(cuid())
+  admin Boolean @default(false)
+  name String
+  password String
+  student Student?
+}
+
+model Student {
+  id String @id @default(cuid())
+  email String
+
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+
+  groupId String?
+  group Group? @relation(fields: [groupId], references: [id])
+
+  courses Course[]
+}
+
+model Course {
+  id String @id @default(cuid())
+  name String
+  dayOpen DayOfWeek
+  hourOpen DateTime @db.Time()
+  students Student[]
+}
+
+model Group {
+  id String @id @default(cuid())
+  name String
+  students Student[]
+}
