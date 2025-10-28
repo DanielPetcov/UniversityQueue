@@ -1,25 +1,32 @@
 "use client";
 
 import z from "zod";
-import { useForm, SubmitHandler } from "react-hook-form";
 
-import { NewStudentSchema } from "@/schemas";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { NewUserSchema } from "@/schemas";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Eye, EyeClosed } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import ErrorMessage from "@/components/form/errorMessage";
 import LabelInputWrapper from "@/components/form/labelInputWrapper";
+import { toast } from "sonner";
 
-export default function NewStudentPage() {
+export default function NewUserPage() {
   const [loading, setLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -29,25 +36,32 @@ export default function NewStudentPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<z.infer<typeof NewStudentSchema>>();
+  } = useForm<z.infer<typeof NewUserSchema>>({
+    defaultValues: {
+      name: "",
+      password: "",
+      admin: false,
+    },
+  });
 
-  const onSubmit: SubmitHandler<z.infer<typeof NewStudentSchema>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof NewUserSchema>> = async (
     data
   ) => {
     try {
       setLoading(true);
-      const response = await fetch("/api/students", {
+      const response = await fetch("/api/users", {
         method: "POST",
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        toast.success("Student created");
+        toast.success("User created");
       } else {
         throw new Error("Response was not ok");
       }
-    } catch (error) {
-      console.log("An error occured: ", error);
+    } catch {
+      console.log("An error occured");
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -55,10 +69,10 @@ export default function NewStudentPage() {
   };
 
   return (
-    <div className=" p-2">
-      <Card className="max-w-sm mx-auto">
+    <div>
+      <Card className="max-w-sm">
         <CardHeader>
-          <CardTitle>New Student</CardTitle>
+          <CardTitle>New User</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -71,18 +85,10 @@ export default function NewStudentPage() {
               {errors.name && <ErrorMessage message={errors.name.message} />}
             </LabelInputWrapper>
             <LabelInputWrapper>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                {...register("email", { required: "Email can not be empty" })}
-                type="email"
-              />
-              {errors.email && <ErrorMessage message={errors.email.message} />}
-            </LabelInputWrapper>
-            <LabelInputWrapper>
               <Label htmlFor="password">Password</Label>
               <InputGroup>
                 <InputGroupInput
+                  id="password"
                   {...register("password", {
                     minLength: {
                       value: 5,
@@ -92,7 +98,7 @@ export default function NewStudentPage() {
                   })}
                   type={visiblePassword ? "text" : "password"}
                 />
-                <InputGroupAddon align={"inline-end"}>
+                <InputGroupAddon align="inline-end">
                   <div onClick={togglePasswordVisibility}>
                     {visiblePassword ? (
                       <EyeClosed className="w-5 h-5" />
@@ -105,6 +111,24 @@ export default function NewStudentPage() {
               {errors.password && (
                 <ErrorMessage message={errors.password.message} />
               )}
+            </LabelInputWrapper>
+            <LabelInputWrapper>
+              <Label>Is Admin</Label>
+              <Select
+                defaultValue="false"
+                onValueChange={(v) =>
+                  setValue("admin", v === "true" ? true : false)
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="false">False</SelectItem>
+                  <SelectItem value="true">True</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.admin && <ErrorMessage message={errors.admin.message} />}
             </LabelInputWrapper>
             <Button disabled={loading} className="w-full" type="submit">
               Submit

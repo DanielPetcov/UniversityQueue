@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 
 export default async function AdminDashboard() {
   const students = await prisma.student.findMany({
@@ -29,7 +31,7 @@ export default async function AdminDashboard() {
             <div>{course.id}</div>
             <div>{course.name}</div>
             <div>{course.dayOpen}</div>
-            <div>{course.hourOpen.getDate()}</div>
+            <div>{course.hourOpen.getUTCHours()}</div>
           </div>
         ))}
       </div>
@@ -41,6 +43,20 @@ export default async function AdminDashboard() {
             <div>{group.name}</div>
           </div>
         ))}
+      </div>
+      <div className="flex gap-2">
+        <Button asChild>
+          <Link href="/admin/students/new">Create student</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/admin/users/new">Create user</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/admin/courses/new">Create course</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/admin/groups/new">Create group</Link>
+        </Button>
       </div>
     </div>
   );

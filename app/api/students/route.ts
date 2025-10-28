@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import z from "zod";
 import prisma from "@/lib/prisma";
-import NewStudentSchema from "@/schemas/student";
+import { NewStudentSchema } from "@/schemas";
 
 export async function GET(req: NextRequest) {
   try {
