@@ -20,9 +20,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(group, { status: 200 });
   } catch (error) {
-    console.log("COURSES | POST error: ", error);
+    console.log("GROUPS | POST error: ", error);
     return NextResponse.json(
-      { error: "Could not create course" },
+      { error: "Could not create group" },
       { status: 400 }
     );
   }

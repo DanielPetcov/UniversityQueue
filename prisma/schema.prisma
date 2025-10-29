@@ -18,17 +18,29 @@ enum DayOfWeek {
   SUNDAY
 }
 
+model Session {
+  id String @id @default(cuid())
+  secretHash String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+}
+
 model User {
   id String @id @default(cuid())
   admin Boolean @default(false)
-  name String
+  name String @unique
   password String
   student Student?
+
+  sessions Session[]
 }
 
 model Student {
   id String @id @default(cuid())
-  email String
+  email String @unique
 
   userId String @unique
   user User @relation(fields: [userId], references: [id])

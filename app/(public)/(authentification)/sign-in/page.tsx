@@ -2,7 +2,7 @@
 
 import z from "zod";
 
-import { SignInSchemaAdmin } from "@/schemas";
+import { SignInSchemaPublic } from "@/schemas";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -20,7 +20,7 @@ import { Eye, EyeClosed } from "lucide-react";
 import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
 
-export default function SignInPageAdmin() {
+export default function SignInPagePublic() {
   const [loading, setLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -32,15 +32,15 @@ export default function SignInPageAdmin() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof SignInSchemaAdmin>>();
+  } = useForm<z.infer<typeof SignInSchemaPublic>>();
 
-  const onSubmit: SubmitHandler<z.infer<typeof SignInSchemaAdmin>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof SignInSchemaPublic>> = async (
     data
   ) => {
     try {
       setLoading(true);
 
-      const response = await fetch("/api/admin/sign-in", {
+      const response = await fetch("/api/public/sign-in", {
         method: "POST",
         body: JSON.stringify(data),
       });
@@ -67,9 +67,9 @@ export default function SignInPageAdmin() {
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <LabelInputWrapper>
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" {...register("name")} />
-            {errors.name && <ErrorMessage message={errors.name.message} />}
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" {...register("email")} type="email" />
+            {errors.email && <ErrorMessage message={errors.email.message} />}
           </LabelInputWrapper>
           <LabelInputWrapper>
             <Label htmlFor="password">Password</Label>

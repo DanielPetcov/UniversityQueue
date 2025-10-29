@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export default function AuthentificationLayoutAdmin({
+export default function AuthentificationLayoutPublic({
   children,
 }: {
   children: ReactNode;

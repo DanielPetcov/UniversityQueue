@@ -341,10 +341,6 @@ export type EnumDayOfWeekFieldUpdateOperationsInput = {
   set?: $Enums.DayOfWeek
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type CourseCreateWithoutStudentsInput = {
   id?: string
   name: string
