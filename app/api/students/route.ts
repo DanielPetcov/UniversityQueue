@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 import prisma from "@/lib/prisma";
 import { NewStudentSchema } from "@/schemas";
+import { hashPassword } from "@/auth/hash-password";
 
 export async function GET(req: NextRequest) {
   try {
@@ -21,10 +22,24 @@ export async function POST(req: NextRequest) {
   try {
     const data: z.infer<typeof NewStudentSchema> = await req.json();
 
+    if (data.name.trim().length === 0) {
+      throw new Error("Name is not present");
+    }
+
+    if (data.email.trim().length === 0) {
+      throw new Error("Email is not present");
+    }
+
+    if (data.password.trim().length === 0) {
+      throw new Error("Password is not present");
+    }
+
+    const hashedPassword = await hashPassword(data.password);
+
     const user = await prisma.user.create({
       data: {
         name: data.name,
-        password: data.password,
+        password: hashedPassword,
       },
     });
 

@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 
 import prisma from "@/lib/prisma";
 
-function generateSecureRandomString(): string {
+export function generateSecureRandomString(): string {
   const alphabet = "abcdefghijkmnpqrstuvwxyz23456789";
 
   const bytes = new Uint8Array(24);

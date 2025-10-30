@@ -1,3 +1,4 @@
+import { hashPassword } from "@/auth/hash-password";
 import prisma from "@/lib/prisma";
 import { NewUserSchema } from "@/schemas";
 import { NextRequest, NextResponse } from "next/server";
@@ -17,10 +18,19 @@ export async function POST(req: NextRequest) {
   try {
     const data: z.infer<typeof NewUserSchema> = await req.json();
 
+    if (data.name.trim().length === 0) {
+      throw new Error("Name is not present");
+    }
+
+    if (data.password.trim().length === 0) {
+      throw new Error("Password is not present");
+    }
+
+    const hashedPassword = await hashPassword(data.name);
     const user = await prisma.user.create({
       data: {
         name: data.name,
-        password: data.password,
+        password: hashedPassword,
         admin: data.admin,
       },
     });
