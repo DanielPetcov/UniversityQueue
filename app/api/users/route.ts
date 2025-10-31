@@ -6,7 +6,12 @@ import z from "zod";
 
 export async function GET(req: NextRequest) {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      omit: {
+        password: true,
+        admin: true,
+      },
+    });
     return NextResponse.json(users, { status: 200 });
   } catch (error) {
     console.log("USERS | GET error: ", error);

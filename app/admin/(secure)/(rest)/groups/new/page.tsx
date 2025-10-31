@@ -20,6 +20,7 @@ export default function NewCoursePage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof NewGroupSchema>>({
     defaultValues: {
@@ -37,6 +38,7 @@ export default function NewCoursePage() {
         body: JSON.stringify(data),
       });
       if (response.ok) {
+        reset();
         toast.success("Group created");
       } else {
         throw new Error("Response was not ok");

@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteCookie } from "@/actions";
+import { Course } from "@/app/generated/prisma/client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,21 +13,43 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { CourseLink } from "@/interfaces";
 
-import { ChevronUp, Home, LogOut, User2 } from "lucide-react";
+import { ChevronUp, Database, Home, LogOut, User2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import { createLinksAdmin, updateLinksAdmin } from "@/data";
-import SidebarGroupLinks from "@/components/sidebar-group-links";
-
-export default function AdminSidebar() {
+export default function PublicSidebar() {
   const router = useRouter();
+  const [courses, setCourses] = useState<CourseLink[]>();
+
+  useEffect(() => {
+    const getCourses = async () => {
+      const response = await fetch(`/api/courses`);
+
+      if (response.ok) {
+        const res: Course[] = await response.json();
+        setCourses([
+          ...res.map((item) => ({
+            href: `/course/${item.id}`,
+            title: item.name,
+            icon: Database,
+          })),
+        ]);
+      }
+    };
+
+    getCourses();
+  }, []);
 
   const ClearToken = async () => {
     await deleteCookie("token");
@@ -37,15 +60,29 @@ export default function AdminSidebar() {
     <Sidebar>
       <SidebarHeader>
         <Button variant={"link"} asChild className="w-fit">
-          <Link href="/admin">
+          <Link href="/">
             <Home className="w-5 h-5" />
             <span>HOME</span>
           </Link>
         </Button>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroupLinks links={createLinksAdmin} label="Create" />
-        <SidebarGroupLinks links={updateLinksAdmin} label="Update" />
+        <SidebarGroup>
+          <SidebarGroupLabel>Courses</SidebarGroupLabel>
+          <SidebarGroupContent className="list-none">
+            {courses &&
+              courses.map((course) => (
+                <SidebarMenuItem key={course.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={course.href}>
+                      <course.icon />
+                      <span>{course.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>

@@ -37,6 +37,7 @@ export default function NewUserPage() {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof NewUserSchema>>({
     defaultValues: {
@@ -56,6 +57,7 @@ export default function NewUserPage() {
         body: JSON.stringify(data),
       });
       if (response.ok) {
+        reset();
         toast.success("User created");
       } else {
         throw new Error("Response was not ok");

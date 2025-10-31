@@ -19,8 +19,10 @@ import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function SignInPageAdmin() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -46,7 +48,7 @@ export default function SignInPageAdmin() {
       });
 
       if (response.ok) {
-        console.log("ok");
+        router.replace("/admin");
       } else {
         throw new Error("Failed to login");
       }

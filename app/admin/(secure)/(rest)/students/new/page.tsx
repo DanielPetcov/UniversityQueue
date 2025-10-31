@@ -29,6 +29,7 @@ export default function NewStudentPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof NewStudentSchema>>();
 
@@ -42,6 +43,7 @@ export default function NewStudentPage() {
         body: JSON.stringify(data),
       });
       if (response.ok) {
+        reset();
         toast.success("Student created");
       } else {
         throw new Error("Response was not ok");

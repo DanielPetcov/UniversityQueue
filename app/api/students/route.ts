@@ -7,7 +7,15 @@ import { hashPassword } from "@/auth/hash-password";
 
 export async function GET(req: NextRequest) {
   try {
-    const students = await prisma.student.findMany();
+    const students = await prisma.student.findMany({
+      include: {
+        user: {
+          omit: {
+            password: true,
+          },
+        },
+      },
+    });
     return NextResponse.json(students, { status: 200 });
   } catch (error) {
     console.log("STUDENTS | GET error: ", error);

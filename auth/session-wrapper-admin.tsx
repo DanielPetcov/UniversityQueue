@@ -39,7 +39,7 @@ export async function SessionWrapperAdmin({
   });
 
   if (!user || !user.admin) {
-    redirect("/admin/sign-in");
+    redirect("/");
   }
 
   return <>{children}</>;

@@ -11,7 +11,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <AdminSidebar />
         <div className="w-full flex flex-col">
           <SidebarTrigger />
-          <div className="flex-1 p-5">{children}</div>
+          <div className="flex-1 p-5 bg-linear-to-r from-slate-300 to-slate-500">
+            {children}
+          </div>
         </div>
       </SidebarProvider>
     </SessionWrapperAdmin>

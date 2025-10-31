@@ -32,6 +32,7 @@ export default function NewCoursePage() {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof NewCourseSchema>>({
     defaultValues: {
@@ -62,6 +63,7 @@ export default function NewCoursePage() {
         body: JSON.stringify(data),
       });
       if (response.ok) {
+        reset();
         toast.success("Course created");
       } else {
         throw new Error("Response was not ok");

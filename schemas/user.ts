@@ -5,3 +5,8 @@ export const NewUserSchema = z.object({
   password: z.string(),
   admin: z.boolean().default(false),
 });
+
+export const UpdateUserSchema = z.object({
+  name: z.string(),
+  admin: z.boolean(),
+});
