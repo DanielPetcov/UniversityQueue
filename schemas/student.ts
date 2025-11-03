@@ -10,3 +10,7 @@ export const UpdateStudentSchema = z.object({
   email: z.string(),
   groupId: z.string().optional(),
 });
+
+export const DeleteStudentSchema = z.object({
+  id: z.string(),
+});

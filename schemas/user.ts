@@ -10,3 +10,7 @@ export const UpdateUserSchema = z.object({
   name: z.string(),
   admin: z.boolean(),
 });
+
+export const DeleteUserSchema = z.object({
+  id: z.string(),
+});

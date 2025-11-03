@@ -69,3 +69,33 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    if (id.trim().length === 0) {
+      throw new Error("Id is missing");
+    }
+
+    const user = await prisma.user.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    console.log("USERS [ID] | DELETE error: ", error);
+    return NextResponse.json(
+      { error: "Could not delete user" },
+      { status: 400 }
+    );
+  }
+}

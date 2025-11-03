@@ -1,5 +1,13 @@
 import { SidebarLink } from "@/interfaces";
-import { Book, BookUser, UserRound, UserStar } from "lucide-react";
+import {
+  Book,
+  BookMinus,
+  BookUser,
+  BookX,
+  UserMinus2,
+  UserRound,
+  UserStar,
+} from "lucide-react";
 
 export const createLinksAdmin: SidebarLink[] = [
   {
@@ -44,5 +52,28 @@ export const updateLinksAdmin: SidebarLink[] = [
     href: "/admin/groups/update",
     title: "Update group",
     icon: BookUser,
+  },
+];
+
+export const deleteLinksAdmin: SidebarLink[] = [
+  {
+    href: "/admin/users/delete",
+    title: "Delete user",
+    icon: UserMinus2,
+  },
+  {
+    href: "/admin/students/delete",
+    title: "Delete student",
+    icon: UserMinus2,
+  },
+  {
+    href: "/admin/courses/delete",
+    title: "Delete course",
+    icon: BookMinus,
+  },
+  {
+    href: "/admin/groups/delete",
+    title: "Delete group",
+    icon: BookX,
   },
 ];

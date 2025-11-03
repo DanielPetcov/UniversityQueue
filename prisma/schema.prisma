@@ -25,7 +25,7 @@ model Session {
   expiresAt DateTime
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {

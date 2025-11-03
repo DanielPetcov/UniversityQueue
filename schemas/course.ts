@@ -7,3 +7,7 @@ export const NewCourseSchema = z.object({
 export const UpdateCourseSchema = z.object({
   name: z.string(),
 });
+
+export const DeleteCourseSchema = z.object({
+  id: z.string(),
+});

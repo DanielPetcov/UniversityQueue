@@ -1,6 +1,6 @@
 "use client";
 
-import { Course } from "@/app/generated/prisma/client";
+import { Course, Group } from "@/app/generated/prisma/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -14,47 +14,47 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function UpdateCoursesPage() {
+export default function UpdateGroupsPage() {
   const router = useRouter();
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
   useEffect(() => {
-    const getCourses = async () => {
-      const response = await fetch("/api/courses");
+    const getGroups = async () => {
+      const response = await fetch("/api/groups");
       if (response.ok) {
         const res: Course[] = await response.json();
-        setCourses(res);
+        setGroups(res);
       }
     };
 
-    getCourses();
+    getGroups();
   }, []);
 
   const handleClick = () => {
-    if (selectedCourse === null || selectedCourse === "") {
-      toast.error("Select a course");
+    if (selectedGroup === null || selectedGroup === "") {
+      toast.error("Select a group");
       return;
     }
-    router.push(`/admin/courses/update/${selectedCourse}`);
+    router.push(`/admin/groups/update/${selectedGroup}`);
   };
 
   return (
     <Card className="min-w-xs max-w-sm">
       <CardHeader>
-        <CardTitle>Select a course</CardTitle>
+        <CardTitle>Select a group</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <Select onValueChange={(v) => setSelectedCourse(v)}>
+          <Select onValueChange={(v) => setSelectedGroup(v)}>
             <SelectTrigger>
-              <SelectValue placeholder="Course" />
+              <SelectValue placeholder="Group" />
             </SelectTrigger>
             <SelectContent position="item-aligned">
-              {courses &&
-                courses.map((course) => (
-                  <SelectItem key={course.id} value={course.id}>
-                    {course.name}
+              {groups &&
+                groups.map((group) => (
+                  <SelectItem key={group.id} value={group.id}>
+                    {group.name}
                   </SelectItem>
                 ))}
             </SelectContent>

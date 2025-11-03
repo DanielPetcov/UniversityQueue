@@ -38,3 +38,33 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    if (id.trim().length === 0) {
+      throw new Error("Id is missing");
+    }
+
+    const course = await prisma.course.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!course) {
+      throw new Error("Course not found");
+    }
+
+    return NextResponse.json(course, { status: 200 });
+  } catch (error) {
+    console.log("COURSES [ID] | DELETE error: ", error);
+    return NextResponse.json(
+      { error: "Could not delete course" },
+      { status: 400 }
+    );
+  }
+}

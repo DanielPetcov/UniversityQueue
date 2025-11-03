@@ -22,10 +22,14 @@ import { ChevronUp, Home, LogOut, User2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { createLinksAdmin, updateLinksAdmin } from "@/data";
+import { createLinksAdmin, deleteLinksAdmin, updateLinksAdmin } from "@/data";
 import SidebarGroupLinks from "@/components/sidebar-group-links";
 
-export default function AdminSidebar() {
+interface AdminSidebarProps {
+  userName: string;
+}
+
+export default function AdminSidebar({ userName }: AdminSidebarProps) {
   const router = useRouter();
 
   const ClearToken = async () => {
@@ -46,6 +50,7 @@ export default function AdminSidebar() {
       <SidebarContent>
         <SidebarGroupLinks links={createLinksAdmin} label="Create" />
         <SidebarGroupLinks links={updateLinksAdmin} label="Update" />
+        <SidebarGroupLinks links={deleteLinksAdmin} label="Delete" />
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
@@ -53,7 +58,7 @@ export default function AdminSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> Username
+                  <User2 /> {userName}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
