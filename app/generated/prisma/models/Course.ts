@@ -26,22 +26,16 @@ export type AggregateCourse = {
 export type CourseMinAggregateOutputType = {
   id: string | null
   name: string | null
-  dayOpen: $Enums.DayOfWeek | null
-  hourOpen: Date | null
 }
 
 export type CourseMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  dayOpen: $Enums.DayOfWeek | null
-  hourOpen: Date | null
 }
 
 export type CourseCountAggregateOutputType = {
   id: number
   name: number
-  dayOpen: number
-  hourOpen: number
   _all: number
 }
 
@@ -49,22 +43,16 @@ export type CourseCountAggregateOutputType = {
 export type CourseMinAggregateInputType = {
   id?: true
   name?: true
-  dayOpen?: true
-  hourOpen?: true
 }
 
 export type CourseMaxAggregateInputType = {
   id?: true
   name?: true
-  dayOpen?: true
-  hourOpen?: true
 }
 
 export type CourseCountAggregateInputType = {
   id?: true
   name?: true
-  dayOpen?: true
-  hourOpen?: true
   _all?: true
 }
 
@@ -143,8 +131,6 @@ export type CourseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type CourseGroupByOutputType = {
   id: string
   name: string
-  dayOpen: $Enums.DayOfWeek
-  hourOpen: Date
   _count: CourseCountAggregateOutputType | null
   _min: CourseMinAggregateOutputType | null
   _max: CourseMaxAggregateOutputType | null
@@ -171,17 +157,13 @@ export type CourseWhereInput = {
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   id?: Prisma.StringFilter<"Course"> | string
   name?: Prisma.StringFilter<"Course"> | string
-  dayOpen?: Prisma.EnumDayOfWeekFilter<"Course"> | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFilter<"Course"> | Date | string
-  students?: Prisma.StudentListRelationFilter
+  stack?: Prisma.XOR<Prisma.StackNullableScalarRelationFilter, Prisma.StackWhereInput> | null
 }
 
 export type CourseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  dayOpen?: Prisma.SortOrder
-  hourOpen?: Prisma.SortOrder
-  students?: Prisma.StudentOrderByRelationAggregateInput
+  stack?: Prisma.StackOrderByWithRelationInput
 }
 
 export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -190,16 +172,12 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CourseWhereInput[]
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   name?: Prisma.StringFilter<"Course"> | string
-  dayOpen?: Prisma.EnumDayOfWeekFilter<"Course"> | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFilter<"Course"> | Date | string
-  students?: Prisma.StudentListRelationFilter
+  stack?: Prisma.XOR<Prisma.StackNullableScalarRelationFilter, Prisma.StackWhereInput> | null
 }, "id">
 
 export type CourseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  dayOpen?: Prisma.SortOrder
-  hourOpen?: Prisma.SortOrder
   _count?: Prisma.CourseCountOrderByAggregateInput
   _max?: Prisma.CourseMaxOrderByAggregateInput
   _min?: Prisma.CourseMinOrderByAggregateInput
@@ -211,267 +189,143 @@ export type CourseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CourseScalarWhereWithAggregatesInput | Prisma.CourseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Course"> | string
   name?: Prisma.StringWithAggregatesFilter<"Course"> | string
-  dayOpen?: Prisma.EnumDayOfWeekWithAggregatesFilter<"Course"> | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeWithAggregatesFilter<"Course"> | Date | string
 }
 
 export type CourseCreateInput = {
   id?: string
   name: string
-  dayOpen: $Enums.DayOfWeek
-  hourOpen: Date | string
-  students?: Prisma.StudentCreateNestedManyWithoutCoursesInput
+  stack?: Prisma.StackCreateNestedOneWithoutCourseInput
 }
 
 export type CourseUncheckedCreateInput = {
   id?: string
   name: string
-  dayOpen: $Enums.DayOfWeek
-  hourOpen: Date | string
-  students?: Prisma.StudentUncheckedCreateNestedManyWithoutCoursesInput
+  stack?: Prisma.StackUncheckedCreateNestedOneWithoutCourseInput
 }
 
 export type CourseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dayOpen?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  students?: Prisma.StudentUpdateManyWithoutCoursesNestedInput
+  stack?: Prisma.StackUpdateOneWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dayOpen?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  students?: Prisma.StudentUncheckedUpdateManyWithoutCoursesNestedInput
+  stack?: Prisma.StackUncheckedUpdateOneWithoutCourseNestedInput
 }
 
 export type CourseCreateManyInput = {
   id?: string
   name: string
-  dayOpen: $Enums.DayOfWeek
-  hourOpen: Date | string
 }
 
 export type CourseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dayOpen?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CourseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dayOpen?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CourseListRelationFilter = {
-  every?: Prisma.CourseWhereInput
-  some?: Prisma.CourseWhereInput
-  none?: Prisma.CourseWhereInput
-}
-
-export type CourseOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type CourseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  dayOpen?: Prisma.SortOrder
-  hourOpen?: Prisma.SortOrder
 }
 
 export type CourseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  dayOpen?: Prisma.SortOrder
-  hourOpen?: Prisma.SortOrder
 }
 
 export type CourseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  dayOpen?: Prisma.SortOrder
-  hourOpen?: Prisma.SortOrder
 }
 
-export type CourseCreateNestedManyWithoutStudentsInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutStudentsInput, Prisma.CourseUncheckedCreateWithoutStudentsInput> | Prisma.CourseCreateWithoutStudentsInput[] | Prisma.CourseUncheckedCreateWithoutStudentsInput[]
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutStudentsInput | Prisma.CourseCreateOrConnectWithoutStudentsInput[]
-  connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
+export type CourseScalarRelationFilter = {
+  is?: Prisma.CourseWhereInput
+  isNot?: Prisma.CourseWhereInput
 }
 
-export type CourseUncheckedCreateNestedManyWithoutStudentsInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutStudentsInput, Prisma.CourseUncheckedCreateWithoutStudentsInput> | Prisma.CourseCreateWithoutStudentsInput[] | Prisma.CourseUncheckedCreateWithoutStudentsInput[]
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutStudentsInput | Prisma.CourseCreateOrConnectWithoutStudentsInput[]
-  connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
+export type CourseCreateNestedOneWithoutStackInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutStackInput, Prisma.CourseUncheckedCreateWithoutStackInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutStackInput
+  connect?: Prisma.CourseWhereUniqueInput
 }
 
-export type CourseUpdateManyWithoutStudentsNestedInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutStudentsInput, Prisma.CourseUncheckedCreateWithoutStudentsInput> | Prisma.CourseCreateWithoutStudentsInput[] | Prisma.CourseUncheckedCreateWithoutStudentsInput[]
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutStudentsInput | Prisma.CourseCreateOrConnectWithoutStudentsInput[]
-  upsert?: Prisma.CourseUpsertWithWhereUniqueWithoutStudentsInput | Prisma.CourseUpsertWithWhereUniqueWithoutStudentsInput[]
-  set?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  disconnect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  delete?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  update?: Prisma.CourseUpdateWithWhereUniqueWithoutStudentsInput | Prisma.CourseUpdateWithWhereUniqueWithoutStudentsInput[]
-  updateMany?: Prisma.CourseUpdateManyWithWhereWithoutStudentsInput | Prisma.CourseUpdateManyWithWhereWithoutStudentsInput[]
-  deleteMany?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
+export type CourseUpdateOneRequiredWithoutStackNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutStackInput, Prisma.CourseUncheckedCreateWithoutStackInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutStackInput
+  upsert?: Prisma.CourseUpsertWithoutStackInput
+  connect?: Prisma.CourseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutStackInput, Prisma.CourseUpdateWithoutStackInput>, Prisma.CourseUncheckedUpdateWithoutStackInput>
 }
 
-export type CourseUncheckedUpdateManyWithoutStudentsNestedInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutStudentsInput, Prisma.CourseUncheckedCreateWithoutStudentsInput> | Prisma.CourseCreateWithoutStudentsInput[] | Prisma.CourseUncheckedCreateWithoutStudentsInput[]
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutStudentsInput | Prisma.CourseCreateOrConnectWithoutStudentsInput[]
-  upsert?: Prisma.CourseUpsertWithWhereUniqueWithoutStudentsInput | Prisma.CourseUpsertWithWhereUniqueWithoutStudentsInput[]
-  set?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  disconnect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  delete?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[]
-  update?: Prisma.CourseUpdateWithWhereUniqueWithoutStudentsInput | Prisma.CourseUpdateWithWhereUniqueWithoutStudentsInput[]
-  updateMany?: Prisma.CourseUpdateManyWithWhereWithoutStudentsInput | Prisma.CourseUpdateManyWithWhereWithoutStudentsInput[]
-  deleteMany?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
-}
-
-export type EnumDayOfWeekFieldUpdateOperationsInput = {
-  set?: $Enums.DayOfWeek
-}
-
-export type CourseCreateWithoutStudentsInput = {
+export type CourseCreateWithoutStackInput = {
   id?: string
   name: string
-  dayOpen: $Enums.DayOfWeek
-  hourOpen: Date | string
 }
 
-export type CourseUncheckedCreateWithoutStudentsInput = {
+export type CourseUncheckedCreateWithoutStackInput = {
   id?: string
   name: string
-  dayOpen: $Enums.DayOfWeek
-  hourOpen: Date | string
 }
 
-export type CourseCreateOrConnectWithoutStudentsInput = {
+export type CourseCreateOrConnectWithoutStackInput = {
   where: Prisma.CourseWhereUniqueInput
-  create: Prisma.XOR<Prisma.CourseCreateWithoutStudentsInput, Prisma.CourseUncheckedCreateWithoutStudentsInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutStackInput, Prisma.CourseUncheckedCreateWithoutStackInput>
 }
 
-export type CourseUpsertWithWhereUniqueWithoutStudentsInput = {
-  where: Prisma.CourseWhereUniqueInput
-  update: Prisma.XOR<Prisma.CourseUpdateWithoutStudentsInput, Prisma.CourseUncheckedUpdateWithoutStudentsInput>
-  create: Prisma.XOR<Prisma.CourseCreateWithoutStudentsInput, Prisma.CourseUncheckedCreateWithoutStudentsInput>
+export type CourseUpsertWithoutStackInput = {
+  update: Prisma.XOR<Prisma.CourseUpdateWithoutStackInput, Prisma.CourseUncheckedUpdateWithoutStackInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutStackInput, Prisma.CourseUncheckedCreateWithoutStackInput>
+  where?: Prisma.CourseWhereInput
 }
 
-export type CourseUpdateWithWhereUniqueWithoutStudentsInput = {
-  where: Prisma.CourseWhereUniqueInput
-  data: Prisma.XOR<Prisma.CourseUpdateWithoutStudentsInput, Prisma.CourseUncheckedUpdateWithoutStudentsInput>
+export type CourseUpdateToOneWithWhereWithoutStackInput = {
+  where?: Prisma.CourseWhereInput
+  data: Prisma.XOR<Prisma.CourseUpdateWithoutStackInput, Prisma.CourseUncheckedUpdateWithoutStackInput>
 }
 
-export type CourseUpdateManyWithWhereWithoutStudentsInput = {
-  where: Prisma.CourseScalarWhereInput
-  data: Prisma.XOR<Prisma.CourseUpdateManyMutationInput, Prisma.CourseUncheckedUpdateManyWithoutStudentsInput>
-}
-
-export type CourseScalarWhereInput = {
-  AND?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
-  OR?: Prisma.CourseScalarWhereInput[]
-  NOT?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
-  id?: Prisma.StringFilter<"Course"> | string
-  name?: Prisma.StringFilter<"Course"> | string
-  dayOpen?: Prisma.EnumDayOfWeekFilter<"Course"> | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFilter<"Course"> | Date | string
-}
-
-export type CourseUpdateWithoutStudentsInput = {
+export type CourseUpdateWithoutStackInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dayOpen?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CourseUncheckedUpdateWithoutStudentsInput = {
+export type CourseUncheckedUpdateWithoutStackInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dayOpen?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CourseUncheckedUpdateManyWithoutStudentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  dayOpen?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-  hourOpen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-
-/**
- * Count Type CourseCountOutputType
- */
-
-export type CourseCountOutputType = {
-  students: number
-}
-
-export type CourseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  students?: boolean | CourseCountOutputTypeCountStudentsArgs
-}
-
-/**
- * CourseCountOutputType without action
- */
-export type CourseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CourseCountOutputType
-   */
-  select?: Prisma.CourseCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * CourseCountOutputType without action
- */
-export type CourseCountOutputTypeCountStudentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StudentWhereInput
-}
 
 
 export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  dayOpen?: boolean
-  hourOpen?: boolean
-  students?: boolean | Prisma.Course$studentsArgs<ExtArgs>
-  _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
+  stack?: boolean | Prisma.Course$stackArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
 
 export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  dayOpen?: boolean
-  hourOpen?: boolean
 }, ExtArgs["result"]["course"]>
 
 export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  dayOpen?: boolean
-  hourOpen?: boolean
 }, ExtArgs["result"]["course"]>
 
 export type CourseSelectScalar = {
   id?: boolean
   name?: boolean
-  dayOpen?: boolean
-  hourOpen?: boolean
 }
 
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dayOpen" | "hourOpen", ExtArgs["result"]["course"]>
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  students?: boolean | Prisma.Course$studentsArgs<ExtArgs>
-  _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
+  stack?: boolean | Prisma.Course$stackArgs<ExtArgs>
 }
 export type CourseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type CourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -479,13 +333,11 @@ export type CourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Course"
   objects: {
-    students: Prisma.$StudentPayload<ExtArgs>[]
+    stack: Prisma.$StackPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    dayOpen: $Enums.DayOfWeek
-    hourOpen: Date
   }, ExtArgs["result"]["course"]>
   composites: {}
 }
@@ -880,7 +732,7 @@ readonly fields: CourseFieldRefs;
  */
 export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  students<T extends Prisma.Course$studentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$studentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stack<T extends Prisma.Course$stackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$stackArgs<ExtArgs>>): Prisma.Prisma__StackClient<runtime.Types.Result.GetResult<Prisma.$StackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -912,8 +764,6 @@ export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.T
 export interface CourseFieldRefs {
   readonly id: Prisma.FieldRef<"Course", 'String'>
   readonly name: Prisma.FieldRef<"Course", 'String'>
-  readonly dayOpen: Prisma.FieldRef<"Course", 'DayOfWeek'>
-  readonly hourOpen: Prisma.FieldRef<"Course", 'DateTime'>
 }
     
 
@@ -1302,27 +1152,22 @@ export type CourseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Course.students
+ * Course.stack
  */
-export type Course$studentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Course$stackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Student
+   * Select specific fields to fetch from the Stack
    */
-  select?: Prisma.StudentSelect<ExtArgs> | null
+  select?: Prisma.StackSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Student
+   * Omit specific fields from the Stack
    */
-  omit?: Prisma.StudentOmit<ExtArgs> | null
+  omit?: Prisma.StackOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.StudentInclude<ExtArgs> | null
-  where?: Prisma.StudentWhereInput
-  orderBy?: Prisma.StudentOrderByWithRelationInput | Prisma.StudentOrderByWithRelationInput[]
-  cursor?: Prisma.StudentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StudentScalarFieldEnum | Prisma.StudentScalarFieldEnum[]
+  include?: Prisma.StackInclude<ExtArgs> | null
+  where?: Prisma.StackWhereInput
 }
 
 /**

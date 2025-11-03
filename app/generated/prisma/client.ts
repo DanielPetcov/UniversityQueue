@@ -59,12 +59,22 @@ export type User = Prisma.UserModel
  */
 export type Student = Prisma.StudentModel
 /**
+ * Model Group
+ * 
+ */
+export type Group = Prisma.GroupModel
+/**
  * Model Course
  * 
  */
 export type Course = Prisma.CourseModel
 /**
- * Model Group
+ * Model Stack
  * 
  */
-export type Group = Prisma.GroupModel
+export type Stack = Prisma.StackModel
+/**
+ * Model StackEntry
+ * 
+ */
+export type StackEntry = Prisma.StackEntryModel

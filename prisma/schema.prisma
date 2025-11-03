@@ -43,24 +43,43 @@ model Student {
   email String @unique
 
   userId String @unique
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   groupId String?
   group Group? @relation(fields: [groupId], references: [id])
 
-  courses Course[]
-}
-
-model Course {
-  id String @id @default(cuid())
-  name String
-  dayOpen DayOfWeek
-  hourOpen DateTime @db.Time()
-  students Student[]
+  stackEntries StackEntry[]
 }
 
 model Group {
   id String @id @default(cuid())
   name String
   students Student[]
+}
+
+model Course {
+  id String @id @default(cuid())
+  name String
+
+  stack Stack?
+}
+
+model Stack {
+  id String @id @default(cuid())
+  courseId String @unique
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  stackEntries StackEntry[]
+}
+
+model StackEntry {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  stackId String
+  stack Stack @relation(fields: [stackId], references: [id], onDelete: Cascade)
+
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
 }

@@ -51,8 +51,10 @@ export const ModelName = {
   Session: 'Session',
   User: 'User',
   Student: 'Student',
+  Group: 'Group',
   Course: 'Course',
-  Group: 'Group'
+  Stack: 'Stack',
+  StackEntry: 'StackEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -102,22 +104,39 @@ export const StudentScalarFieldEnum = {
 export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
 
 
-export const CourseScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  dayOpen: 'dayOpen',
-  hourOpen: 'hourOpen'
-} as const
-
-export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
-
-
 export const GroupScalarFieldEnum = {
   id: 'id',
   name: 'name'
 } as const
 
 export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
+
+
+export const CourseScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const StackScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId'
+} as const
+
+export type StackScalarFieldEnum = (typeof StackScalarFieldEnum)[keyof typeof StackScalarFieldEnum]
+
+
+export const StackEntryScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  stackId: 'stackId',
+  studentId: 'studentId'
+} as const
+
+export type StackEntryScalarFieldEnum = (typeof StackEntryScalarFieldEnum)[keyof typeof StackEntryScalarFieldEnum]
 
 
 export const SortOrder = {
