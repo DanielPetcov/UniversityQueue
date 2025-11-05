@@ -2,7 +2,15 @@ import prisma from "@/lib/prisma";
 import { DataTable } from "../data-table";
 import { coursesColumns } from "./columns";
 export async function CoursesTable() {
-  const courses = await prisma.course.findMany();
+  const courses = await prisma.course.findMany({
+    include: {
+      group: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
 
   return (
     <>

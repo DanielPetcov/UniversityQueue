@@ -7,6 +7,7 @@ export async function GroupsTable() {
       _count: {
         select: {
           students: true,
+          courses: true,
         },
       },
     },

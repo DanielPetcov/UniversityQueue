@@ -8,6 +8,7 @@ const GroupsColumnsSchema = z.object({
   name: z.string(),
   _count: z.object({
     students: z.number(),
+    courses: z.number(),
   }),
 });
 
@@ -19,5 +20,9 @@ export const groupsColumns: ColumnDef<z.infer<typeof GroupsColumnsSchema>>[] = [
   {
     accessorKey: "_count.students",
     header: "Total Students",
+  },
+  {
+    accessorKey: "_count.courses",
+    header: "Total Courses",
   },
 ];
