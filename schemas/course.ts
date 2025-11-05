@@ -2,6 +2,7 @@ import z from "zod";
 
 export const NewCourseSchema = z.object({
   name: z.string(),
+  groupId: z.string(),
 });
 
 export const UpdateCourseSchema = z.object({

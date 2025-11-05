@@ -28,6 +28,11 @@ export async function POST(req: NextRequest) {
         stack: {
           create: {},
         },
+        group: {
+          connect: {
+            id: data.groupId,
+          },
+        },
       },
     });
 
