@@ -1013,7 +1013,8 @@ export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof Gr
 
 export const CourseScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  groupId: 'groupId'
 } as const
 
 export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]

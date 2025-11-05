@@ -55,12 +55,15 @@ model Group {
   id String @id @default(cuid())
   name String
   students Student[]
+  courses Course[]
 }
 
 model Course {
   id String @id @default(cuid())
   name String
 
+  groupId String
+  group Group @relation(fields: [groupId], references: [id])
   stack Stack?
 }
 
