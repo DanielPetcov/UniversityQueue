@@ -10,13 +10,22 @@ export default async function UpdateGroupPage({
     where: {
       id,
     },
+    include: {
+      students: true,
+    },
   });
 
   if (!group) return;
 
+  const students = await prisma.student.findMany({
+    where: {
+      groupId: null,
+    },
+  });
+
   return (
     <div>
-      <ClientForm group={group} />
+      <ClientForm group={group} students={students} />
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function UpdateGroupsPage() {
     const getGroups = async () => {
       const response = await fetch("/api/groups");
       if (response.ok) {
-        const res: Course[] = await response.json();
+        const res: Group[] = await response.json();
         setGroups(res);
       }
     };

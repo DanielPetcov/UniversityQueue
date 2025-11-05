@@ -22,7 +22,12 @@ export async function PUT(
       where: {
         id: id,
       },
-      data: data,
+      data: {
+        name: data.name,
+        students: {
+          set: data.students,
+        },
+      },
     });
 
     if (!group) {

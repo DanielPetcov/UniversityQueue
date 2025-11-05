@@ -1,6 +1,6 @@
 "use client";
 
-import { Group } from "@/app/generated/prisma/client";
+import { Group, Student } from "@/app/generated/prisma/client";
 import LabelInputWrapper from "@/components/form/label-input-wrapper";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,21 +12,44 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { GroupWithStudents } from "@/interfaces";
 
 import { UpdateGroupSchema } from "@/schemas";
-import { useState } from "react";
+import { X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import z from "zod";
 
 interface ClientFormProps {
-  group: Group;
+  group: GroupWithStudents;
+  students: Student[];
 }
 
-export function ClientForm({ group }: ClientFormProps) {
+export function ClientForm({ group, students }: ClientFormProps) {
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, setValue } = useForm<
+  const [freeStudents, setFreeStudents] = useState<Student[]>([]);
+  const [localStudents, setLocalStudents] = useState<Student[]>([]);
+
+  useEffect(() => {
+    setLocalStudents(group.students);
+    setValue("students", group.students);
+  }, [group]);
+
+  useEffect(() => {
+    setFreeStudents(students);
+  }, [students]);
+
+  const { register, handleSubmit, setValue, getValues } = useForm<
     z.infer<typeof UpdateGroupSchema>
   >({
     defaultValues: {
@@ -46,6 +69,7 @@ export function ClientForm({ group }: ClientFormProps) {
 
       if (response.ok) {
         toast.success("Succesfully updated");
+        location.reload();
       } else {
         throw new Error("An error ocurred");
       }
@@ -54,6 +78,15 @@ export function ClientForm({ group }: ClientFormProps) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const removeStudent = (student: Student) => {
+    setLocalStudents((prev) => prev.filter((s) => s.id !== student.id));
+    setFreeStudents((prev) => [...prev, student]);
+    setValue(
+      "students",
+      getValues("students").filter((s) => s.id !== student.id)
+    );
   };
 
   return (
@@ -70,6 +103,57 @@ export function ClientForm({ group }: ClientFormProps) {
               <Input {...register("name")} />
             </LabelInputWrapper>
 
+            <LabelInputWrapper>
+              <Label>Manage Students</Label>
+              <Select
+                onValueChange={(v) => {
+                  const student = freeStudents.find((s) => s.id === v);
+                  if (!student) return;
+                  setLocalStudents((prev) => [...prev, student]);
+                  setFreeStudents((prev) =>
+                    prev.filter((s) => s.id !== student.id)
+                  );
+                  setValue("students", [...getValues("students"), student]);
+                }}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Add student" />
+                </SelectTrigger>
+                <SelectContent>
+                  {freeStudents
+                    .sort((a, b) =>
+                      a.email.toLowerCase().localeCompare(b.email.toLowerCase())
+                    )
+                    .map((student) => (
+                      <SelectItem key={student.id} value={student.id}>
+                        {student.email}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+
+              <Separator />
+              <div className="space-y-2">
+                {localStudents
+                  .sort((a, b) =>
+                    a.email.toLowerCase().localeCompare(b.email.toLowerCase())
+                  )
+                  .map((student) => (
+                    <div
+                      key={student.id}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-xs">{student.email}</span>
+                      <Button
+                        size={"icon-sm"}
+                        onClick={() => removeStudent(student)}
+                      >
+                        <X />
+                      </Button>
+                    </div>
+                  ))}
+              </div>
+            </LabelInputWrapper>
             <Button disabled={loading} className="w-full" type="submit">
               Update
             </Button>

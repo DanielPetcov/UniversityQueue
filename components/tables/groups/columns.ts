@@ -13,10 +13,6 @@ const GroupsColumnsSchema = z.object({
 
 export const groupsColumns: ColumnDef<z.infer<typeof GroupsColumnsSchema>>[] = [
   {
-    accessorKey: "id",
-    header: "Id",
-  },
-  {
     accessorKey: "name",
     header: "Name",
   },

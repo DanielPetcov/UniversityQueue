@@ -11,10 +11,6 @@ const CoursesColumnsSchema = z.object({
 export const coursesColumns: ColumnDef<z.infer<typeof CoursesColumnsSchema>>[] =
   [
     {
-      accessorKey: "id",
-      header: "Id",
-    },
-    {
       accessorKey: "name",
       header: "Name",
     },

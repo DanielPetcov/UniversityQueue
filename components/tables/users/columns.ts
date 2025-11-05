@@ -16,10 +16,6 @@ const UsersColumnsSchema = z.object({
 
 export const usersColumns: ColumnDef<z.infer<typeof UsersColumnsSchema>>[] = [
   {
-    accessorKey: "id",
-    header: "Id",
-  },
-  {
     accessorKey: "name",
     header: "Name",
   },

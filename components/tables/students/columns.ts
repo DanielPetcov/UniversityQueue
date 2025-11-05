@@ -22,10 +22,6 @@ export const studentsColumns: ColumnDef<
   z.infer<typeof StudentsColumnsSchema>
 >[] = [
   {
-    accessorKey: "id",
-    header: "Id",
-  },
-  {
     accessorKey: "email",
     header: "Email",
   },
