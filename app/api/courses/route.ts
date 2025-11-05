@@ -44,3 +44,21 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const courses = await prisma.course.deleteMany();
+
+    if (!courses) {
+      throw new Error("Could not delete all courses");
+    }
+
+    return NextResponse.json({ status: 200 });
+  } catch (error) {
+    console.log("COURSES | DELETE error: ", error);
+    return NextResponse.json(
+      { error: "Could not delete courses" },
+      { status: 400 }
+    );
+  }
+}

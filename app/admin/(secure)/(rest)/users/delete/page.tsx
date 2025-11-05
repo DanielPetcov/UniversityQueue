@@ -77,7 +77,7 @@ export default function DeleteUsersPage() {
         });
         if (response.ok) {
           toast.success("Succesfully deleted");
-          router.replace("/admin");
+          location.reload();
         } else {
           toast.error("Something went wrong");
         }

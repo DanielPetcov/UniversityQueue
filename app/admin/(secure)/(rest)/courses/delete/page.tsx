@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteAll } from "@/actions";
 import { Course, Student, User } from "@/app/generated/prisma/client";
 import ErrorMessage from "@/components/form/error-message";
 import LabelInputWrapper from "@/components/form/label-input-wrapper";
@@ -86,12 +87,20 @@ export default function DeleteCoursesPage() {
     });
   };
 
+  const handleDeleteAll = async () => {
+    openDialog({
+      title: "Delete all courses?",
+      description: "This will permanently remove all courses.",
+      onConfirm: async () => await deleteAll("courses"),
+    });
+  };
+
   return (
     <Card className="min-w-xs max-w-sm">
       <CardHeader>
         <CardTitle>Delete a course</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <LabelInputWrapper>
             <Select
@@ -117,6 +126,14 @@ export default function DeleteCoursesPage() {
             Delete
           </Button>
         </form>
+        <div className="text-center">OR</div>
+        <Button
+          className="w-full"
+          variant="destructive"
+          onClick={handleDeleteAll}
+        >
+          Delete ALL
+        </Button>
       </CardContent>
     </Card>
   );

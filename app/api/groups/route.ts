@@ -37,3 +37,21 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const groups = await prisma.group.deleteMany();
+
+    if (!groups) {
+      throw new Error("Could not delete all groups");
+    }
+
+    return NextResponse.json({ status: 200 });
+  } catch (error) {
+    console.log("GROUPS | DELETE error: ", error);
+    return NextResponse.json(
+      { error: "Could not delete groups" },
+      { status: 400 }
+    );
+  }
+}

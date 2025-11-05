@@ -1,4 +1,9 @@
-import { StudentsTable, UsersTable, CoursesTable } from "@/components/tables";
+import {
+  StudentsTable,
+  UsersTable,
+  CoursesTable,
+  GroupsTable,
+} from "@/components/tables";
 
 export default async function AdminDashboard() {
   return (
@@ -6,6 +11,7 @@ export default async function AdminDashboard() {
       <UsersTable />
       <StudentsTable />
       <CoursesTable />
+      <GroupsTable />
     </div>
   );
 }

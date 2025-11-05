@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { DataTable } from "../data-table";
 import { groupsColumns } from "./columns";
-export async function CoursesTable() {
+export async function GroupsTable() {
   const groups = await prisma.group.findMany({
     include: {
       _count: {

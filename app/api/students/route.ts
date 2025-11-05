@@ -86,3 +86,21 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const students = await prisma.student.deleteMany();
+
+    if (!students) {
+      throw new Error("Could not delete all students");
+    }
+
+    return NextResponse.json({ status: 200 });
+  } catch (error) {
+    console.log("STUDENTS | DELETE error: ", error);
+    return NextResponse.json(
+      { error: "Could not delete students" },
+      { status: 400 }
+    );
+  }
+}
