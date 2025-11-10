@@ -1,7 +1,7 @@
 "use client";
 
-import { StackEntry } from "@/app/generated/prisma/client";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface SubscribeButtonProps {
   studentId: string;
@@ -17,8 +17,10 @@ export function SubscribeButton({ studentId, stackId }: SubscribeButtonProps) {
     });
 
     if (response.ok) {
-      const entry: StackEntry = await response.json();
-      console.log(entry);
+      toast.success("Successfully subscribed");
+      location.reload();
+    } else {
+      toast.error("Could not subscribe");
     }
   };
 

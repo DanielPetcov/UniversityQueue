@@ -1,29 +1,104 @@
+"use client";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface StackItemProps {
   id: string;
-  name: string;
-  date: Date;
+  userName: string;
+  createdAt: Date;
+  canDelete: boolean;
   index: number;
 }
 
-export function StackItem({ id, name, index }: StackItemProps) {
+export function StackItem({
+  id,
+  userName,
+  createdAt,
+  canDelete,
+  index,
+}: StackItemProps) {
+  const shortenedName = userName.split(" ");
+  const initials =
+    shortenedName.length >= 2
+      ? shortenedName[0][0] + shortenedName[1][0]
+      : userName.slice(0, 2);
+
+  const formattedDate = createdAt.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  const formattedTime = createdAt.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+  const handleDelete = async () => {
+    const respponse = await fetch(`/api/stacks/${id}/entries/${id}`, {
+      method: "DELETE",
+    });
+    if (respponse.ok) {
+      toast.success("Succesfully deleted");
+      location.reload();
+    } else {
+      toast.error("An error ocurred");
+    }
+  };
+
   return (
     <Popover>
-      <PopoverTrigger>open</PopoverTrigger>
-      <PopoverContent>
-        <div key={id} className="relative">
-          <div className="w-10 h-10 bg-red-200 rounded-full">
-            <div className="flex h-full items-center justify-center">
-              <span className="text-xs opacity-50">{name.slice(0, 2)}</span>
-            </div>
+      <PopoverTrigger className="relative group">
+        <div className="w-10 lg:w-15 h-10 lg:h-15 rounded-full bg-linear-to-br from-pink-200 to-red-300 shadow-sm hover:shadow-md transition-all duration-200">
+          <div className="flex h-full items-center justify-center">
+            <span className="text-sm font-semibold text-red-700 group-hover:text-red-900 transition-colors">
+              {initials.toUpperCase()}
+            </span>
           </div>
-          <div className="absolute bottom-0 right-0 text-xs">#{index + 1}</div>
         </div>
+        <div className="absolute bottom-0 right-0 text-[10px] lg:text-sm font-medium bg-white/80 px-1 rounded-md shadow-sm">
+          #{index + 1}
+        </div>
+      </PopoverTrigger>
+
+      <PopoverContent
+        side="top"
+        align="center"
+        className="w-56 rounded-xl border border-neutral-200 shadow-lg bg-white/95 backdrop-blur-md p-3 space-y-3"
+      >
+        <div className="text-sm lg:text-sm font-medium text-neutral-800">
+          {userName}
+        </div>
+
+        <div className="text-xs lg:text-sm text-neutral-500 border-t border-neutral-100 pt-2 space-y-1">
+          <div className="flex justify-between">
+            <span className="font-medium text-neutral-600">Date:</span>
+            <span>{formattedDate}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-neutral-600">Time:</span>
+            <span>{formattedTime}</span>
+          </div>
+        </div>
+
+        {canDelete && (
+          <div className="pt-1 border-t border-neutral-100">
+            <Button
+              variant="destructive"
+              size="sm"
+              className="w-full"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   );

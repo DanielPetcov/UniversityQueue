@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Stack, SubscribeButton } from "@/components/stack";
+import { Separator } from "@/components/ui/separator";
 
 export default async function CoursePage({
   params,
@@ -65,10 +66,11 @@ export default async function CoursePage({
     return <div>no stack were found</div>;
   }
 
-  const stackData = stack.stackEntries.map((e) => ({
+  const stackEntries = stack.stackEntries.map((e) => ({
     id: e.id,
-    date: e.createdAt,
-    name: e.student.user.name,
+    userName: e.student.user.name,
+    createdAt: e.createdAt,
+    canDelete: student.userId === e.student.user.id,
   }));
 
   let isSubscribed = false;
@@ -77,11 +79,15 @@ export default async function CoursePage({
   }
 
   return (
-    <div>
-      {course.name}
-      <Stack data={stackData} />
+    <div className="space-y-4">
+      <p>{course.name}</p>
+      <Stack entries={stackEntries} />
+
       {!isSubscribed && (
-        <SubscribeButton studentId={student.id} stackId={stack.id} />
+        <>
+          <Separator />
+          <SubscribeButton studentId={student.id} stackId={stack.id} />
+        </>
       )}
     </div>
   );

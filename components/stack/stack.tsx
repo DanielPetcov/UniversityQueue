@@ -1,21 +1,20 @@
 import { StackItem } from "./stack-item";
 
 interface StackProps {
-  data: {
+  entries: {
     id: string;
-    name: string;
-    date: Date;
+    userName: string;
+    createdAt: Date;
+    canDelete: boolean;
   }[];
 }
 
-export function Stack({ data }: StackProps) {
+export function Stack({ entries }: StackProps) {
   return (
-    <div className="border max-w-[100px]">
-      <div className="flex items-center gap-5">
-        {data.map((item, index) => (
-          <StackItem key={index} index={index} {...item} />
-        ))}
-      </div>
+    <div className="flex items-center gap-5">
+      {entries.map((entry, index) => (
+        <StackItem index={index} key={entry.id} {...entry} />
+      ))}
     </div>
   );
 }
