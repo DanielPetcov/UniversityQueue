@@ -1,3 +1,3 @@
 export default function PublicDashboard() {
-  return <div>public user dashboard</div>;
+  return <div>Nice to meet you</div>;
 }

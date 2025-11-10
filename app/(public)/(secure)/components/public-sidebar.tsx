@@ -28,7 +28,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function PublicSidebar() {
+interface PublicSidebarProps {
+  userName: string;
+}
+
+export default function PublicSidebar({ userName }: PublicSidebarProps) {
   const router = useRouter();
   const [courses, setCourses] = useState<CourseLink[]>();
 
@@ -40,7 +44,7 @@ export default function PublicSidebar() {
         const res: Course[] = await response.json();
         setCourses([
           ...res.map((item) => ({
-            href: `/course/${item.id}`,
+            href: `/courses/${item.id}`,
             title: item.name,
             icon: Database,
           })),
@@ -90,7 +94,7 @@ export default function PublicSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> Username
+                  <User2 /> {userName}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

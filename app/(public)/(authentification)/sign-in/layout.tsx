@@ -9,6 +9,7 @@ export default async function AuthentificationLayoutPublic({
 }: {
   children: ReactNode;
 }) {
+  console.log("a");
   const cookie = await cookies();
   const token = cookie.get("token");
 

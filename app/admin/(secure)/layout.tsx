@@ -5,6 +5,7 @@ import AdminSidebar from "./components/admin-sidebar";
 import { GetUserIdToken, SessionWrapperAdmin } from "@/auth";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 export default async function AdminLayout({
   children,
@@ -13,7 +14,9 @@ export default async function AdminLayout({
 }) {
   const cookie = await cookies();
   const token = cookie.get("token");
-  if (!token) return;
+  if (!token) {
+    redirect("/admin/sign-in");
+  }
   const userId = await GetUserIdToken(token.value);
   const user = await prisma.user.findUnique({
     where: {
@@ -25,7 +28,9 @@ export default async function AdminLayout({
     },
   });
 
-  if (!user) return;
+  if (!user) {
+    redirect("/admin/sign-in");
+  }
 
   return (
     <SessionWrapperAdmin>
