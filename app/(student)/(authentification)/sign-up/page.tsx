@@ -6,21 +6,21 @@ import z from "zod";
 import { toast } from "sonner";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { SignUpSchemaAdmin } from "@/schemas";
+import { SignUpSchemaStudent } from "@/schemas";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { LabelInputWrapper } from "@/components/form";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-export default function SignUpPageAdmin() {
+export default async function SignUpPageStudent() {
   const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit } =
-    useForm<z.infer<typeof SignUpSchemaAdmin>>();
+    useForm<z.infer<typeof SignUpSchemaStudent>>();
 
-  const onSubmit: SubmitHandler<z.infer<typeof SignUpSchemaAdmin>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof SignUpSchemaStudent>> = async (
     data
   ) => {
     try {
@@ -35,6 +35,7 @@ export default function SignUpPageAdmin() {
       setLoading(false);
     }
   };
+
   return (
     <Card>
       <CardHeader>
@@ -45,6 +46,14 @@ export default function SignUpPageAdmin() {
           <LabelInputWrapper>
             <Label>Name</Label>
             <Input {...register("name")} />
+          </LabelInputWrapper>
+          <LabelInputWrapper>
+            <Label>Email</Label>
+            <Input {...register("email")} />
+          </LabelInputWrapper>
+          <LabelInputWrapper>
+            <Label>Admin key</Label>
+            <Input {...register("adminKey")} />
           </LabelInputWrapper>
           <LabelInputWrapper>
             <Label>Password</Label>
