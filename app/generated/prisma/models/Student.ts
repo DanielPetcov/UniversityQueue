@@ -144,7 +144,7 @@ export type StudentGroupByOutputType = {
   id: string
   email: string
   userId: string
-  groupId: string | null
+  groupId: string
   _count: StudentCountAggregateOutputType | null
   _min: StudentMinAggregateOutputType | null
   _max: StudentMaxAggregateOutputType | null
@@ -172,9 +172,9 @@ export type StudentWhereInput = {
   id?: Prisma.StringFilter<"Student"> | string
   email?: Prisma.StringFilter<"Student"> | string
   userId?: Prisma.StringFilter<"Student"> | string
-  groupId?: Prisma.StringNullableFilter<"Student"> | string | null
+  groupId?: Prisma.StringFilter<"Student"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
+  group?: Prisma.XOR<Prisma.GroupScalarRelationFilter, Prisma.GroupWhereInput>
   stackEntries?: Prisma.StackEntryListRelationFilter
 }
 
@@ -182,7 +182,7 @@ export type StudentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   group?: Prisma.GroupOrderByWithRelationInput
   stackEntries?: Prisma.StackEntryOrderByRelationAggregateInput
@@ -195,9 +195,9 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.StudentWhereInput | Prisma.StudentWhereInput[]
   OR?: Prisma.StudentWhereInput[]
   NOT?: Prisma.StudentWhereInput | Prisma.StudentWhereInput[]
-  groupId?: Prisma.StringNullableFilter<"Student"> | string | null
+  groupId?: Prisma.StringFilter<"Student"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
+  group?: Prisma.XOR<Prisma.GroupScalarRelationFilter, Prisma.GroupWhereInput>
   stackEntries?: Prisma.StackEntryListRelationFilter
 }, "id" | "email" | "userId">
 
@@ -205,7 +205,7 @@ export type StudentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupId?: Prisma.SortOrder
   _count?: Prisma.StudentCountOrderByAggregateInput
   _max?: Prisma.StudentMaxOrderByAggregateInput
   _min?: Prisma.StudentMinOrderByAggregateInput
@@ -218,14 +218,14 @@ export type StudentScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Student"> | string
   email?: Prisma.StringWithAggregatesFilter<"Student"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Student"> | string
-  groupId?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  groupId?: Prisma.StringWithAggregatesFilter<"Student"> | string
 }
 
 export type StudentCreateInput = {
   id?: string
   email: string
   user: Prisma.UserCreateNestedOneWithoutStudentInput
-  group?: Prisma.GroupCreateNestedOneWithoutStudentsInput
+  group: Prisma.GroupCreateNestedOneWithoutStudentsInput
   stackEntries?: Prisma.StackEntryCreateNestedManyWithoutStudentInput
 }
 
@@ -233,7 +233,7 @@ export type StudentUncheckedCreateInput = {
   id?: string
   email: string
   userId: string
-  groupId?: string | null
+  groupId: string
   stackEntries?: Prisma.StackEntryUncheckedCreateNestedManyWithoutStudentInput
 }
 
@@ -241,7 +241,7 @@ export type StudentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneRequiredWithoutStudentNestedInput
-  group?: Prisma.GroupUpdateOneWithoutStudentsNestedInput
+  group?: Prisma.GroupUpdateOneRequiredWithoutStudentsNestedInput
   stackEntries?: Prisma.StackEntryUpdateManyWithoutStudentNestedInput
 }
 
@@ -249,7 +249,7 @@ export type StudentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.StringFieldUpdateOperationsInput | string
   stackEntries?: Prisma.StackEntryUncheckedUpdateManyWithoutStudentNestedInput
 }
 
@@ -257,7 +257,7 @@ export type StudentCreateManyInput = {
   id?: string
   email: string
   userId: string
-  groupId?: string | null
+  groupId: string
 }
 
 export type StudentUpdateManyMutationInput = {
@@ -269,7 +269,7 @@ export type StudentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type StudentNullableScalarRelationFilter = {
@@ -345,10 +345,6 @@ export type StudentUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutUserInput, Prisma.StudentUpdateWithoutUserInput>, Prisma.StudentUncheckedUpdateWithoutUserInput>
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type StudentCreateNestedManyWithoutGroupInput = {
   create?: Prisma.XOR<Prisma.StudentCreateWithoutGroupInput, Prisma.StudentUncheckedCreateWithoutGroupInput> | Prisma.StudentCreateWithoutGroupInput[] | Prisma.StudentUncheckedCreateWithoutGroupInput[]
   connectOrCreate?: Prisma.StudentCreateOrConnectWithoutGroupInput | Prisma.StudentCreateOrConnectWithoutGroupInput[]
@@ -408,14 +404,14 @@ export type StudentUpdateOneRequiredWithoutStackEntriesNestedInput = {
 export type StudentCreateWithoutUserInput = {
   id?: string
   email: string
-  group?: Prisma.GroupCreateNestedOneWithoutStudentsInput
+  group: Prisma.GroupCreateNestedOneWithoutStudentsInput
   stackEntries?: Prisma.StackEntryCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutUserInput = {
   id?: string
   email: string
-  groupId?: string | null
+  groupId: string
   stackEntries?: Prisma.StackEntryUncheckedCreateNestedManyWithoutStudentInput
 }
 
@@ -438,14 +434,14 @@ export type StudentUpdateToOneWithWhereWithoutUserInput = {
 export type StudentUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  group?: Prisma.GroupUpdateOneWithoutStudentsNestedInput
+  group?: Prisma.GroupUpdateOneRequiredWithoutStudentsNestedInput
   stackEntries?: Prisma.StackEntryUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.StringFieldUpdateOperationsInput | string
   stackEntries?: Prisma.StackEntryUncheckedUpdateManyWithoutStudentNestedInput
 }
 
@@ -496,21 +492,21 @@ export type StudentScalarWhereInput = {
   id?: Prisma.StringFilter<"Student"> | string
   email?: Prisma.StringFilter<"Student"> | string
   userId?: Prisma.StringFilter<"Student"> | string
-  groupId?: Prisma.StringNullableFilter<"Student"> | string | null
+  groupId?: Prisma.StringFilter<"Student"> | string
 }
 
 export type StudentCreateWithoutStackEntriesInput = {
   id?: string
   email: string
   user: Prisma.UserCreateNestedOneWithoutStudentInput
-  group?: Prisma.GroupCreateNestedOneWithoutStudentsInput
+  group: Prisma.GroupCreateNestedOneWithoutStudentsInput
 }
 
 export type StudentUncheckedCreateWithoutStackEntriesInput = {
   id?: string
   email: string
   userId: string
-  groupId?: string | null
+  groupId: string
 }
 
 export type StudentCreateOrConnectWithoutStackEntriesInput = {
@@ -533,14 +529,14 @@ export type StudentUpdateWithoutStackEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneRequiredWithoutStudentNestedInput
-  group?: Prisma.GroupUpdateOneWithoutStudentsNestedInput
+  group?: Prisma.GroupUpdateOneRequiredWithoutStudentsNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutStackEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type StudentCreateManyGroupInput = {
@@ -606,7 +602,7 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userId?: boolean
   groupId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  group?: boolean | Prisma.Student$groupArgs<ExtArgs>
+  group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   stackEntries?: boolean | Prisma.Student$stackEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
@@ -617,7 +613,7 @@ export type StudentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   groupId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  group?: boolean | Prisma.Student$groupArgs<ExtArgs>
+  group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
 
 export type StudentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -626,7 +622,7 @@ export type StudentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   groupId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  group?: boolean | Prisma.Student$groupArgs<ExtArgs>
+  group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
 
 export type StudentSelectScalar = {
@@ -639,31 +635,31 @@ export type StudentSelectScalar = {
 export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "userId" | "groupId", ExtArgs["result"]["student"]>
 export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  group?: boolean | Prisma.Student$groupArgs<ExtArgs>
+  group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   stackEntries?: boolean | Prisma.Student$stackEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  group?: boolean | Prisma.Student$groupArgs<ExtArgs>
+  group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
 }
 export type StudentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  group?: boolean | Prisma.Student$groupArgs<ExtArgs>
+  group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
 }
 
 export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Student"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    group: Prisma.$GroupPayload<ExtArgs> | null
+    group: Prisma.$GroupPayload<ExtArgs>
     stackEntries: Prisma.$StackEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
     userId: string
-    groupId: string | null
+    groupId: string
   }, ExtArgs["result"]["student"]>
   composites: {}
 }
@@ -1059,7 +1055,7 @@ readonly fields: StudentFieldRefs;
 export interface Prisma__StudentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  group<T extends Prisma.Student$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$groupArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  group<T extends Prisma.GroupDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GroupDefaultArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   stackEntries<T extends Prisma.Student$stackEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$stackEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StackEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1487,25 +1483,6 @@ export type StudentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Students to delete.
    */
   limit?: number
-}
-
-/**
- * Student.group
- */
-export type Student$groupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Group
-   */
-  select?: Prisma.GroupSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Group
-   */
-  omit?: Prisma.GroupOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.GroupInclude<ExtArgs> | null
-  where?: Prisma.GroupWhereInput
 }
 
 /**

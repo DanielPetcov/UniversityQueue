@@ -402,6 +402,10 @@ export type StackEntryUncheckedUpdateManyWithoutStackNestedInput = {
   deleteMany?: Prisma.StackEntryScalarWhereInput | Prisma.StackEntryScalarWhereInput[]
 }
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type StackEntryCreateWithoutStudentInput = {
   id?: string
   createdAt?: Date | string

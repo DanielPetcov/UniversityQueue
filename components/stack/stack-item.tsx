@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface StackItemProps {
   id: string;
@@ -55,9 +56,23 @@ export function StackItem({
   return (
     <Popover>
       <PopoverTrigger className="relative group">
-        <div className="w-10 lg:w-15 h-10 lg:h-15 rounded-full bg-linear-to-br from-pink-200 to-red-300 shadow-sm hover:shadow-md transition-all duration-200">
+        <div
+          className={cn(
+            "w-10 lg:w-15 h-10 lg:h-15 rounded-full bg-linear-to-br shadow-sm hover:shadow-md transition-all duration-200",
+            canDelete
+              ? "from-blue-200 to bg-cyan-300"
+              : "from-pink-200 to-red-300"
+          )}
+        >
           <div className="flex h-full items-center justify-center">
-            <span className="text-sm font-semibold text-red-700 group-hover:text-red-900 transition-colors">
+            <span
+              className={cn(
+                "text-sm font-semibold transition-colors",
+                canDelete
+                  ? "text-blue-700 group-hover:text-cyan-900"
+                  : "text-red-700 group-hover:text-red-900"
+              )}
+            >
               {initials.toUpperCase()}
             </span>
           </div>

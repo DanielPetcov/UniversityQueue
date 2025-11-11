@@ -17,15 +17,15 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model Session
- * 
- */
-export type Session = Prisma.SessionModel
-/**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Admin
+ * 
+ */
+export type Admin = Prisma.AdminModel
 /**
  * Model Student
  * 
@@ -51,3 +51,8 @@ export type Stack = Prisma.StackModel
  * 
  */
 export type StackEntry = Prisma.StackEntryModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel

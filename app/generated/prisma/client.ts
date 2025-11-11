@@ -28,8 +28,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Sessions
- * const sessions = await prisma.session.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -44,15 +44,15 @@ path.join(__dirname, "query_engine-windows.dll.node")
 path.join(process.cwd(), "app/generated/prisma/query_engine-windows.dll.node")
 
 /**
- * Model Session
- * 
- */
-export type Session = Prisma.SessionModel
-/**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Admin
+ * 
+ */
+export type Admin = Prisma.AdminModel
 /**
  * Model Student
  * 
@@ -78,3 +78,8 @@ export type Stack = Prisma.StackModel
  * 
  */
 export type StackEntry = Prisma.StackEntryModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel

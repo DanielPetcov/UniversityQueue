@@ -48,13 +48,14 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
-  Session: 'Session',
   User: 'User',
+  Admin: 'Admin',
   Student: 'Student',
   Group: 'Group',
   Course: 'Course',
   Stack: 'Stack',
-  StackEntry: 'StackEntry'
+  StackEntry: 'StackEntry',
+  Session: 'Session'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,25 +74,23 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const SessionScalarFieldEnum = {
-  id: 'id',
-  secretHash: 'secretHash',
-  createdAt: 'createdAt',
-  expiresAt: 'expiresAt',
-  userId: 'userId'
-} as const
-
-export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
-
-
 export const UserScalarFieldEnum = {
   id: 'id',
-  admin: 'admin',
+  role: 'role',
   name: 'name',
   password: 'password'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AdminScalarFieldEnum = {
+  id: 'id',
+  adminKey: 'adminKey',
+  userId: 'userId'
+} as const
+
+export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
 
 
 export const StudentScalarFieldEnum = {
@@ -106,7 +105,8 @@ export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeo
 
 export const GroupScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  adminKey: 'adminKey'
 } as const
 
 export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
@@ -140,6 +140,17 @@ export const StackEntryScalarFieldEnum = {
 export type StackEntryScalarFieldEnum = (typeof StackEntryScalarFieldEnum)[keyof typeof StackEntryScalarFieldEnum]
 
 
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  secretHash: 'secretHash',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt',
+  userId: 'userId'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -154,12 +165,4 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

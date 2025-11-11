@@ -19,3 +19,12 @@ export const DayOfWeek = {
 } as const
 
 export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
+
+
+export const UserRole = {
+  STUDENT: 'STUDENT',
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]

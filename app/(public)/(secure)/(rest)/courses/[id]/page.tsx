@@ -80,7 +80,10 @@ export default async function CoursePage({
 
   return (
     <div className="space-y-4">
-      <p>{course.name}</p>
+      <div>
+        <p className="text-lg font-semibold">{course.name}</p>
+        <p>Total queue: {stackEntries.length}</p>
+      </div>
       <Stack entries={stackEntries} />
 
       {!isSubscribed && (
