@@ -6,7 +6,7 @@ import { SignInSchemaAdmin } from "@/schemas";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { SubmitHandler, useForm } from "react-hook-form";
-import LabelInputWrapper from "@/components/form/label-input-wrapper";
+import { LabelInputWrapper, ErrorMessage } from "@/components/form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/input-group";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
-import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

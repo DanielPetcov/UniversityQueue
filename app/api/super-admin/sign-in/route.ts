@@ -5,12 +5,12 @@ import z from "zod";
 import bcrypt from "bcryptjs";
 
 import prisma from "@/lib/prisma";
-import { SignInSchemaAdmin } from "@/schemas";
+import { SignInSchemaSuperAdmin } from "@/schemas";
 import { createSession, UpdateSession } from "@/auth";
 
 export async function POST(req: NextRequest) {
   try {
-    const data: z.infer<typeof SignInSchemaAdmin> = await req.json();
+    const data: z.infer<typeof SignInSchemaSuperAdmin> = await req.json();
 
     if (data.name.trim() === "") {
       throw new Error("Name is missing");
@@ -21,9 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     const user = await prisma.user.findUnique({
-      where: {
-        name: data.name,
-      },
+      where: { name: data.name },
     });
 
     if (!user) {
@@ -86,7 +84,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(user.id, { status: 200 });
   } catch (error) {
-    console.log("ADMIN SIGN-IN | POST error: ", error);
+    console.log("SUPER-ADMIN SIGN-IN | POST error: ", error);
     return NextResponse.json({ error: "Could not sign-in" }, { status: 400 });
   }
 }

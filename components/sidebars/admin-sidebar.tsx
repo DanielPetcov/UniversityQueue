@@ -29,7 +29,7 @@ interface AdminSidebarProps {
   userName: string;
 }
 
-export default function AdminSidebar({ userName }: AdminSidebarProps) {
+export function AdminSidebar({ userName }: AdminSidebarProps) {
   const router = useRouter();
 
   const ClearToken = async () => {

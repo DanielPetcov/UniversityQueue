@@ -1,22 +1,22 @@
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 import z from "zod";
-import prisma from "@/lib/prisma";
-import { SignInSchemaPublic } from "@/schemas";
 import bcrypt from "bcryptjs";
-import { cookies } from "next/headers";
 
-import { createSession, generateSecureRandomString } from "@/auth";
+import prisma from "@/lib/prisma";
+import { SignInSchemaStudent } from "@/schemas";
+import { createSession, UpdateSession } from "@/auth";
 
 export async function POST(req: NextRequest) {
   try {
-    const data: z.infer<typeof SignInSchemaPublic> = await req.json();
+    const data: z.infer<typeof SignInSchemaStudent> = await req.json();
 
-    if (data.email.trim().length === 0) {
+    if (data.email.trim() === "") {
       throw new Error("Email is missing");
     }
 
-    if (data.password.trim().length === 0) {
+    if (data.password.trim() === "") {
       throw new Error("Password is missing");
     }
 
@@ -24,13 +24,18 @@ export async function POST(req: NextRequest) {
       where: {
         email: data.email,
       },
-      include: {
-        user: true,
+      select: {
+        userId: true,
+        user: {
+          select: {
+            password: true,
+          },
+        },
       },
     });
 
     if (!student) {
-      throw new Error("Could not find student");
+      throw new Error("Student not found");
     }
 
     const validPassword = await bcrypt.compare(
@@ -39,7 +44,7 @@ export async function POST(req: NextRequest) {
     );
 
     if (!validPassword) {
-      throw new Error("Password is not valid");
+      throw new Error("Invalid password");
     }
 
     const session = await prisma.session.findFirst({
@@ -61,7 +66,7 @@ export async function POST(req: NextRequest) {
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
       });
-      return NextResponse.json({ status: 200 });
+      return NextResponse.json(student.userId, { status: 200 });
     }
 
     if (now > session.expiresAt.getTime()) {
@@ -76,25 +81,10 @@ export async function POST(req: NextRequest) {
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
       });
-      return NextResponse.json({ status: 200 });
+      return NextResponse.json(student.userId, { status: 200 });
     }
 
-    const newSecret = generateSecureRandomString();
-    const salt = await bcrypt.genSalt();
-    const hashed = await bcrypt.hash(newSecret, salt);
-
-    const additionalMs = 1000 * 60 * 60 * 24 * 7; // 7 days
-    const newExpiresAt = new Date(Date.now() + additionalMs);
-
-    await prisma.session.update({
-      where: { id: session.id },
-      data: {
-        secretHash: hashed,
-        expiresAt: newExpiresAt,
-      },
-    });
-
-    const token = `${session.id}.${newSecret}`;
+    const { token, expirationDate } = await UpdateSession(session.id);
 
     cookie.set({
       name: "token",
@@ -103,12 +93,12 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: Math.floor((newExpiresAt.getTime() - Date.now()) / 1000),
+      maxAge: Math.floor((expirationDate.getTime() - Date.now()) / 1000),
     });
 
-    return NextResponse.json({ status: 200 });
+    return NextResponse.json(student.userId, { status: 200 });
   } catch (error) {
-    console.log("SIGN-IN | POST error: ", error);
+    console.log("STUDENT SIGN-IN | POST error: ", error);
     return NextResponse.json({ error: "Could not sign-in" }, { status: 400 });
   }
 }
