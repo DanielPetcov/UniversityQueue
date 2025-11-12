@@ -22,6 +22,37 @@ export async function POST(req: NextRequest) {
   try {
     const data: z.infer<typeof NewCourseSchema> = await req.json();
 
+    if (data.name.trim() === "") {
+      throw new Error("Name is missing");
+    }
+
+    if (data.userId.trim() === "") {
+      throw new Error("User ID is missing");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: data.userId,
+        admin: {
+          NOT: undefined,
+        },
+        role: {
+          equals: "ADMIN",
+        },
+      },
+      include: {
+        admin: {
+          select: {
+            adminKey: true,
+          },
+        },
+      },
+    });
+
+    if (!user || !user.admin) {
+      throw new Error("Could not find user");
+    }
+
     const course = await prisma.course.create({
       data: {
         name: data.name,
@@ -30,7 +61,7 @@ export async function POST(req: NextRequest) {
         },
         group: {
           connect: {
-            id: data.groupId,
+            adminKey: user.admin.adminKey,
           },
         },
       },

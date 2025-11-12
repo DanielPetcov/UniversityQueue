@@ -1,13 +1,6 @@
+import { Book, BookMinus, BookUser, UserMinus2, UserRound } from "lucide-react";
+
 import { SidebarLink } from "@/interfaces";
-import {
-  Book,
-  BookMinus,
-  BookUser,
-  BookX,
-  UserMinus2,
-  UserRound,
-  UserStar,
-} from "lucide-react";
 
 export const createLinksAdmin: SidebarLink[] = [
   {

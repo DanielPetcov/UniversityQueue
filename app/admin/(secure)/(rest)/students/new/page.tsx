@@ -1,25 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import z from "zod";
+import { toast } from "sonner";
+import { Eye, EyeClosed } from "lucide-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
+import { useUser } from "@/states";
 import { NewStudentSchema } from "@/schemas";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Eye, EyeClosed } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import ErrorMessage from "@/components/form/error-message";
-import LabelInputWrapper from "@/components/form/label-input-wrapper";
+import { LabelInputWrapper, ErrorMessage } from "@/components/form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function NewStudentPage() {
+  const { userId } = useUser();
   const [loading, setLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -30,14 +33,25 @@ export default function NewStudentPage() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
-  } = useForm<z.infer<typeof NewStudentSchema>>();
+  } = useForm<z.infer<typeof NewStudentSchema>>({
+    defaultValues: {
+      userId: userId || "",
+    },
+  });
+
+  useEffect(() => {
+    if (!userId) return;
+    setValue("userId", userId);
+  }, [userId]);
 
   const onSubmit: SubmitHandler<z.infer<typeof NewStudentSchema>> = async (
     data
   ) => {
     try {
       setLoading(true);
+      console.log(data);
       const response = await fetch("/api/students", {
         method: "POST",
         body: JSON.stringify(data),

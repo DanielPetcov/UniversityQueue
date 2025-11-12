@@ -43,8 +43,39 @@ export async function POST(req: NextRequest) {
       throw new Error("Password is missing");
     }
 
-    if (data.adminKey.trim() === "") {
-      throw new Error("Admin key is missing");
+    if (data.userId.trim() === "") {
+      throw new Error("User ID is missing");
+    }
+
+    const admin = await prisma.user.findUnique({
+      where: {
+        id: data.userId,
+        admin: {
+          NOT: undefined,
+        },
+        role: {
+          equals: "ADMIN",
+        },
+      },
+      include: {
+        admin: {
+          select: {
+            adminKey: true,
+          },
+        },
+      },
+    });
+
+    if (!admin || !admin.admin) {
+      throw new Error("Could not find admin");
+    }
+
+    const group = await prisma.group.findUnique({
+      where: { adminKey: admin.admin.adminKey },
+    });
+
+    if (!group) {
+      throw new Error("Group not found");
     }
 
     const hashedPassword = await hashPassword(data.password);
@@ -59,14 +90,6 @@ export async function POST(req: NextRequest) {
       throw new Error("Could not create user");
     }
 
-    const group = await prisma.group.findUnique({
-      where: { adminKey: data.adminKey },
-    });
-
-    if (!group) {
-      throw new Error("Group not found");
-    }
-
     const student = await prisma.student.create({
       data: {
         userId: user.id,
@@ -79,16 +102,16 @@ export async function POST(req: NextRequest) {
       throw new Error("Could not create student");
     }
 
-    await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        student: {
-          connect: student,
-        },
-      },
-    });
+    // await prisma.user.update({
+    //   where: {
+    //     id: user.id,
+    //   },
+    //   data: {
+    //     student: {
+    //       connect: student,
+    //     },
+    //   },
+    // });
 
     return NextResponse.json(student, { status: 200 });
   } catch (error) {

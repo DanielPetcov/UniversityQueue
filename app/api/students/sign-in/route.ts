@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
         userId: true,
         user: {
           select: {
+            name: true,
             password: true,
           },
         },
@@ -66,7 +67,10 @@ export async function POST(req: NextRequest) {
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
       });
-      return NextResponse.json(student.userId, { status: 200 });
+      return NextResponse.json(
+        { userId: student.userId, userName: student.user.name },
+        { status: 200 }
+      );
     }
 
     if (now > session.expiresAt.getTime()) {
@@ -81,7 +85,10 @@ export async function POST(req: NextRequest) {
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
       });
-      return NextResponse.json(student.userId, { status: 200 });
+      return NextResponse.json(
+        { userId: student.userId, userName: student.user.name },
+        { status: 200 }
+      );
     }
 
     const { token, expirationDate } = await UpdateSession(session.id);
@@ -96,7 +103,10 @@ export async function POST(req: NextRequest) {
       maxAge: Math.floor((expirationDate.getTime() - Date.now()) / 1000),
     });
 
-    return NextResponse.json(student.userId, { status: 200 });
+    return NextResponse.json(
+      { userId: student.userId, userName: student.user.name },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("STUDENT SIGN-IN | POST error: ", error);
     return NextResponse.json({ error: "Could not sign-in" }, { status: 400 });

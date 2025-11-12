@@ -11,7 +11,7 @@ export const NewStudentSchema = z.object({
   name: z.string(),
   email: z.string(),
   password: z.string().min(5),
-  adminKey: z.string(),
+  userId: z.string(),
 });
 
 export const UpdateStudentSchema = z.object({

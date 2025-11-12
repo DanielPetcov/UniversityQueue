@@ -1,8 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+
+import { Copy } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,

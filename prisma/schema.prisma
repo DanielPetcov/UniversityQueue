@@ -63,7 +63,7 @@ model Group {
   name String
 
   adminKey String @unique
-  admin Admin @relation(fields: [adminKey], references: [id], onDelete: Cascade)
+  admin Admin @relation(fields: [adminKey], references: [adminKey], onDelete: Cascade)
 
   students Student[]
   courses Course[]

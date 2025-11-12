@@ -5,3 +5,8 @@ export type GroupWithStudents = Prisma.GroupGetPayload<{
     students: true;
   };
 }>;
+
+export type UpdateGroupName = {
+  groupId: string;
+  groupName: string;
+};

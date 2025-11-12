@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       throw new Error("Could not create admin");
     }
 
-    const group = prisma.group.create({
+    const group = await prisma.group.create({
       data: {
         name: data.groupName,
         admin: {

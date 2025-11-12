@@ -40,8 +40,8 @@ export function AdminSidebar() {
   const [openDialog, setOpenDialog] = useState(false);
 
   const SignOut = async () => {
-    await deleteCookie("token");
     clearUser();
+    await deleteCookie("token");
     location.reload();
   };
 

@@ -52,7 +52,10 @@ export async function POST(req: NextRequest) {
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
       });
-      return NextResponse.json(user.id, { status: 200 });
+      return NextResponse.json(
+        { userId: user.id, userName: user.name },
+        { status: 200 }
+      );
     }
 
     if (now > session.expiresAt.getTime()) {
@@ -67,7 +70,10 @@ export async function POST(req: NextRequest) {
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
       });
-      return NextResponse.json(user.id, { status: 200 });
+      return NextResponse.json(
+        { userId: user.id, userName: user.name },
+        { status: 200 }
+      );
     }
 
     const { token, expirationDate } = await UpdateSession(session.id);
