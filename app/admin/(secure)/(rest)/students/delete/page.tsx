@@ -1,18 +1,19 @@
 "use client";
 
-import { deleteAll } from "@/actions";
-import { Student, User } from "@/app/generated/prisma/client";
-import ErrorMessage from "@/components/form/error-message";
-import LabelInputWrapper from "@/components/form/label-input-wrapper";
+import { useEffect, useState } from "react";
+
+import z from "zod";
+import { toast } from "sonner";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { deleteAllStudents } from "@/actions";
+import { StudentWithUser } from "@/interfaces";
+import { useActionDialog, useUser } from "@/states";
+import { DeleteStudentSchema } from "@/schemas";
+
+import { LabelInputWrapper, ErrorMessage } from "@/components/form";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { DialogPortal } from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -20,19 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { StudentWithUser } from "@/interfaces";
-import { DeleteStudentSchema } from "@/schemas";
-import { useActionDialog } from "@/states";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import z from "zod";
 
 export default function DeleteStudentsPage() {
-  const [students, setStudents] = useState<StudentWithUser[]>([]);
-  const router = useRouter();
+  const { userId } = useUser();
   const { openDialog } = useActionDialog();
+  const [loading, setLoading] = useState(false);
+  const [students, setStudents] = useState<StudentWithUser[]>([]);
   const {
     handleSubmit,
     setValue,
@@ -42,8 +36,9 @@ export default function DeleteStudentsPage() {
   } = useForm<z.infer<typeof DeleteStudentSchema>>();
 
   useEffect(() => {
+    if (!userId) return;
     const getStudents = async () => {
-      const response = await fetch("/api/students");
+      const response = await fetch(`/api/admins/${userId}/students`);
       if (response.ok) {
         const res: StudentWithUser[] = await response.json();
         setStudents(res);
@@ -51,7 +46,7 @@ export default function DeleteStudentsPage() {
     };
 
     getStudents();
-  }, []);
+  }, [userId]);
 
   const onSubmit: SubmitHandler<z.infer<typeof DeleteStudentSchema>> = async (
     data
@@ -74,14 +69,22 @@ export default function DeleteStudentsPage() {
       title: "Delete student?",
       description: "This will permanently remove the student.",
       onConfirm: async () => {
-        const response = await fetch(`/api/students/${studentId}`, {
-          method: "DELETE",
-        });
-        if (response.ok) {
-          toast.success("Succesfully deleted");
-          router.replace("/admin");
-        } else {
+        try {
+          setLoading(true);
+          const response = await fetch(`/api/students/${studentId}`, {
+            method: "DELETE",
+          });
+          if (response.ok) {
+            toast.success("Succesfully deleted");
+            location.reload();
+          } else {
+            throw new Error("Something went wrong");
+          }
+        } catch (error) {
+          console.log(error);
           toast.error("Something went wrong");
+        } finally {
+          setLoading(false);
         }
       },
     });
@@ -91,7 +94,16 @@ export default function DeleteStudentsPage() {
     openDialog({
       title: "Delete all students?",
       description: "This will permanently remove all students.",
-      onConfirm: async () => await deleteAll("students"),
+      onConfirm: async () => {
+        try {
+          setLoading(true);
+          await deleteAllStudents(userId);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      },
     });
   };
 
@@ -122,7 +134,7 @@ export default function DeleteStudentsPage() {
             </Select>
             {errors.id && <ErrorMessage message={errors.id.message} />}
           </LabelInputWrapper>
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" disabled={loading}>
             Delete
           </Button>
         </form>
@@ -131,6 +143,7 @@ export default function DeleteStudentsPage() {
           className="w-full"
           variant="destructive"
           onClick={handleDeleteAll}
+          disabled={loading}
         >
           Delete All
         </Button>

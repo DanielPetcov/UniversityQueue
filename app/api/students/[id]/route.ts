@@ -51,17 +51,25 @@ export async function DELETE(
       throw new Error("Id is missing");
     }
 
-    const student = await prisma.student.delete({
+    const user = await prisma.user.findFirst({
       where: {
-        id: id,
+        student: {
+          id: id,
+        },
       },
     });
 
-    if (!student) {
-      throw new Error("Student not found");
+    if (!user) {
+      throw new Error("Could not find user");
     }
 
-    return NextResponse.json(student, { status: 200 });
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: user.id,
+      },
+    });
+
+    return NextResponse.json(deletedUser, { status: 200 });
   } catch (error) {
     console.log("STUDENTS [ID] | DELETE error: ", error);
     return NextResponse.json(

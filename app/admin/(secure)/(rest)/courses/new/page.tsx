@@ -1,18 +1,18 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import z from "zod";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { useUser } from "@/states";
 import { NewCourseSchema } from "@/schemas";
 
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { LabelInputWrapper, ErrorMessage } from "@/components/form";
 
 export default function NewCoursePage() {

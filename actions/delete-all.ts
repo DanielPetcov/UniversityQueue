@@ -1,14 +1,39 @@
 import { toast } from "sonner";
 
-// delete all items based on key
-export const deleteAll = async (key: string) => {
-  const response = await fetch(`/api/${key}`, {
-    method: "DELETE",
-  });
-  if (response.ok) {
-    toast.success("Succesfully deleted");
-    location.reload();
-  } else {
-    toast.error("Something went wrong");
+export const deleteAllStudents = async (userId: string | null) => {
+  if (!userId) return;
+  try {
+    const response = await fetch(`/api/admins/${userId}/students`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      toast.success("Succesfully deleted");
+      location.reload();
+    } else {
+      throw new Error("Something went wrong");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("An error ocurred");
+  }
+};
+
+export const deleteAllCourses = async (userId: string | null) => {
+  if (!userId) return;
+  try {
+    const response = await fetch(`/api/admins/${userId}/courses`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      toast.success("Succesfully deleted");
+      location.reload();
+    } else {
+      throw new Error("Something went wrong");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("An error ocurred");
   }
 };

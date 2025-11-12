@@ -1,18 +1,10 @@
 "use client";
 
-import { deleteAll } from "@/actions";
-import { Course, Student, User } from "@/app/generated/prisma/client";
-import ErrorMessage from "@/components/form/error-message";
-import LabelInputWrapper from "@/components/form/label-input-wrapper";
+import { deleteAllCourses } from "@/actions";
+import { Course } from "@/app/generated/prisma/client";
+import { LabelInputWrapper, ErrorMessage } from "@/components/form";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { DialogPortal } from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -20,19 +12,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { StudentWithUser } from "@/interfaces";
 import { DeleteCourseSchema } from "@/schemas";
-import { useActionDialog } from "@/states";
-import { useRouter } from "next/navigation";
+import { useActionDialog, useUser } from "@/states";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
 export default function DeleteCoursesPage() {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const router = useRouter();
+  const { userId } = useUser();
   const { openDialog } = useActionDialog();
+  const [loading, setLoading] = useState(false);
+  const [courses, setCourses] = useState<Course[]>([]);
   const {
     handleSubmit,
     setValue,
@@ -42,8 +33,9 @@ export default function DeleteCoursesPage() {
   } = useForm<z.infer<typeof DeleteCourseSchema>>();
 
   useEffect(() => {
+    if (!userId) return;
     const getCourses = async () => {
-      const response = await fetch("/api/courses");
+      const response = await fetch(`/api/admins/${userId}/courses`);
       if (response.ok) {
         const res: Course[] = await response.json();
         setCourses(res);
@@ -74,14 +66,22 @@ export default function DeleteCoursesPage() {
       title: "Delete course?",
       description: "This will permanently remove the course.",
       onConfirm: async () => {
-        const response = await fetch(`/api/courses/${courseId}`, {
-          method: "DELETE",
-        });
-        if (response.ok) {
-          toast.success("Succesfully deleted");
-          router.replace("/admin");
-        } else {
+        try {
+          setLoading(true);
+          const response = await fetch(`/api/courses/${courseId}`, {
+            method: "DELETE",
+          });
+          if (response.ok) {
+            toast.success("Succesfully deleted");
+            location.reload();
+          } else {
+            throw new Error("Something went wrong");
+          }
+        } catch (error) {
+          console.log(error);
           toast.error("Something went wrong");
+        } finally {
+          setLoading(false);
         }
       },
     });
@@ -91,7 +91,16 @@ export default function DeleteCoursesPage() {
     openDialog({
       title: "Delete all courses?",
       description: "This will permanently remove all courses.",
-      onConfirm: async () => await deleteAll("courses"),
+      onConfirm: async () => {
+        try {
+          setLoading(true);
+          await deleteAllCourses(userId);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      },
     });
   };
 
