@@ -1,5 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { toast } from "sonner";
+
+import { useUser } from "@/states";
+import { StudentWithUser } from "@/interfaces";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -9,19 +17,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { StudentWithUser } from "@/interfaces";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 export default function UpdateStudentsPage() {
   const router = useRouter();
+  const { userId } = useUser();
   const [students, setStudents] = useState<StudentWithUser[]>([]);
   const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!userId) return;
     const getStudents = async () => {
-      const response = await fetch("/api/students");
+      const response = await fetch(`/api/admins/${userId}/students`);
       if (response.ok) {
         const res: StudentWithUser[] = await response.json();
         setStudents(res);
@@ -29,7 +35,7 @@ export default function UpdateStudentsPage() {
     };
 
     getStudents();
-  }, []);
+  }, [userId]);
 
   const handleClick = () => {
     if (selectedStudent === null || selectedStudent === "") {

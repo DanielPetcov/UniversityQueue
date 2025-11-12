@@ -16,7 +16,6 @@ export const NewStudentSchema = z.object({
 
 export const UpdateStudentSchema = z.object({
   email: z.string(),
-  groupId: z.string().optional(),
 });
 
 export const DeleteStudentSchema = z.object({

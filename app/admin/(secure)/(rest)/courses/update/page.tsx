@@ -1,6 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { toast } from "sonner";
+
 import { Course } from "@/app/generated/prisma/client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -10,18 +16,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useUser } from "@/states";
 
 export default function UpdateCoursesPage() {
+  const { userId } = useUser();
   const router = useRouter();
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!userId) return;
     const getCourses = async () => {
-      const response = await fetch("/api/courses");
+      const response = await fetch(`/api/admins/${userId}/courses`);
       if (response.ok) {
         const res: Course[] = await response.json();
         setCourses(res);
@@ -29,7 +35,7 @@ export default function UpdateCoursesPage() {
     };
 
     getCourses();
-  }, []);
+  }, [userId]);
 
   const handleClick = () => {
     if (selectedCourse === null || selectedCourse === "") {

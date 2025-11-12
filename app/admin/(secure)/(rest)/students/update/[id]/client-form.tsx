@@ -1,7 +1,17 @@
 "use client";
 
-import { Group, Student } from "@/app/generated/prisma/client";
-import LabelInputWrapper from "@/components/form/label-input-wrapper";
+import { useState } from "react";
+
+import z from "zod";
+import { toast } from "sonner";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { UpdateStudentSchema } from "@/schemas";
+import { Student } from "@/app/generated/prisma/client";
+
+import { LabelInputWrapper } from "@/components/form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,35 +20,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { UpdateStudentSchema } from "@/schemas";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
-
-import z from "zod";
 
 interface ClientFormProps {
   student: Student;
-  groups: Group[];
 }
 
-export function ClientForm({ student, groups }: ClientFormProps) {
+export function ClientForm({ student }: ClientFormProps) {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, setValue } = useForm<
     z.infer<typeof UpdateStudentSchema>
   >({
     defaultValues: {
       email: student.email,
-      groupId: student.groupId || undefined,
     },
   });
 
@@ -77,24 +70,7 @@ export function ClientForm({ student, groups }: ClientFormProps) {
               <Label>Email</Label>
               <Input {...register("email")} />
             </LabelInputWrapper>
-            <LabelInputWrapper>
-              <Label>Group</Label>
-              <Select
-                defaultValue={student.groupId || ""}
-                onValueChange={(v) => setValue("groupId", v)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Group" />
-                </SelectTrigger>
-                <SelectContent>
-                  {groups.map((group) => (
-                    <SelectItem key={group.id} value={group.id}>
-                      {group.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </LabelInputWrapper>
+
             <Button disabled={loading} className="w-full" type="submit">
               Update
             </Button>

@@ -15,11 +15,9 @@ export default async function UpdateStudentPage({
 
   if (!student) return;
 
-  const groups = await prisma.group.findMany();
-
   return (
     <div>
-      <ClientForm student={student} groups={groups} />
+      <ClientForm student={student} />
     </div>
   );
 }

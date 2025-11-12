@@ -43,7 +43,7 @@ export default function DeleteCoursesPage() {
     };
 
     getCourses();
-  }, []);
+  }, [userId]);
 
   const onSubmit: SubmitHandler<z.infer<typeof DeleteCourseSchema>> = async (
     data
@@ -131,7 +131,7 @@ export default function DeleteCoursesPage() {
             </Select>
             {errors.id && <ErrorMessage message={errors.id.message} />}
           </LabelInputWrapper>
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" disabled={loading}>
             Delete
           </Button>
         </form>
@@ -140,6 +140,7 @@ export default function DeleteCoursesPage() {
           className="w-full"
           variant="destructive"
           onClick={handleDeleteAll}
+          disabled={loading}
         >
           Delete ALL
         </Button>

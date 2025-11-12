@@ -1,8 +1,18 @@
 "use client";
 
-import { Course, Group, Student } from "@/app/generated/prisma/client";
-import LabelInputWrapper from "@/components/form/label-input-wrapper";
+import { useState } from "react";
+
+import z from "zod";
+import { toast } from "sonner";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { Course } from "@/app/generated/prisma/client";
+import { UpdateCourseSchema } from "@/schemas";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { LabelInputWrapper } from "@/components/form";
 import {
   Card,
   CardContent,
@@ -10,21 +20,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { UpdateCourseSchema } from "@/schemas";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
-
-import z from "zod";
 
 interface ClientFormProps {
   course: Course;
@@ -32,7 +27,7 @@ interface ClientFormProps {
 
 export function ClientForm({ course }: ClientFormProps) {
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, setValue } = useForm<
+  const { register, handleSubmit } = useForm<
     z.infer<typeof UpdateCourseSchema>
   >({
     defaultValues: {
