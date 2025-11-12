@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { LabelInputWrapper } from "@/components/form";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-export default async function SignUpPageStudent() {
+export default function SignUpPageStudent() {
   const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit } =

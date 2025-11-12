@@ -24,9 +24,6 @@ export async function PUT(
       },
       data: {
         name: data.name,
-        students: {
-          set: data.students,
-        },
       },
     });
 

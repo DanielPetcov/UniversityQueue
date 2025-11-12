@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 import z from "zod";
 import prisma from "@/lib/prisma";
-import { NewStudentSchema } from "@/schemas";
+
 import { hashPassword } from "@/auth/hash-password";
+import { NewStudentSchema } from "@/schemas";
 
 export async function GET(req: NextRequest) {
   try {
@@ -30,20 +31,23 @@ export async function POST(req: NextRequest) {
   try {
     const data: z.infer<typeof NewStudentSchema> = await req.json();
 
-    if (data.name.trim().length === 0) {
-      throw new Error("Name is not present");
+    if (data.name.trim() === "") {
+      throw new Error("Name is missing");
     }
 
-    if (data.email.trim().length === 0) {
-      throw new Error("Email is not present");
+    if (data.email.trim() === "") {
+      throw new Error("Email is missing");
     }
 
-    if (data.password.trim().length === 0) {
-      throw new Error("Password is not present");
+    if (data.password.trim() === "") {
+      throw new Error("Password is missing");
+    }
+
+    if (data.adminKey.trim() === "") {
+      throw new Error("Admin key is missing");
     }
 
     const hashedPassword = await hashPassword(data.password);
-
     const user = await prisma.user.create({
       data: {
         name: data.name,
@@ -55,10 +59,19 @@ export async function POST(req: NextRequest) {
       throw new Error("Could not create user");
     }
 
+    const group = await prisma.group.findUnique({
+      where: { adminKey: data.adminKey },
+    });
+
+    if (!group) {
+      throw new Error("Group not found");
+    }
+
     const student = await prisma.student.create({
       data: {
-        email: data.email,
         userId: user.id,
+        email: data.email,
+        groupId: group.id,
       },
     });
 

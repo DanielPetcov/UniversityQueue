@@ -6,23 +6,22 @@ import z from "zod";
 import { toast } from "sonner";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { SignUpSchemaAdmin } from "@/schemas";
+import { SignInSchemaSuperAdmin } from "@/schemas";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { LabelInputWrapper } from "@/components/form";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-export default function SignUpPageAdmin() {
+export default function SignInPageSuperAdmin() {
   const [loading, setLoading] = useState(false);
-
   const { register, handleSubmit } =
-    useForm<z.infer<typeof SignUpSchemaAdmin>>();
+    useForm<z.infer<typeof SignInSchemaSuperAdmin>>();
 
-  const onSubmit: SubmitHandler<z.infer<typeof SignUpSchemaAdmin>> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<
+    z.infer<typeof SignInSchemaSuperAdmin>
+  > = async (data) => {
     try {
       setLoading(true);
       console.log(data);
@@ -35,10 +34,11 @@ export default function SignUpPageAdmin() {
       setLoading(false);
     }
   };
+
   return (
     <Card>
       <CardHeader>
-        <h1>Sign up</h1>
+        <h1>Sign in</h1>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -49,10 +49,6 @@ export default function SignUpPageAdmin() {
           <LabelInputWrapper>
             <Label>Password</Label>
             <Input {...register("password")} />
-          </LabelInputWrapper>
-          <LabelInputWrapper>
-            <Label>Group Name</Label>
-            <Input {...register("groupName")} />
           </LabelInputWrapper>
           <Button className="w-full" type="submit" disabled={loading}>
             Submit

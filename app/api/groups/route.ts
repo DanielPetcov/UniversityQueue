@@ -21,6 +21,11 @@ export async function POST(req: NextRequest) {
     const group = await prisma.group.create({
       data: {
         name: data.name,
+        admin: {
+          connect: {
+            adminKey: data.adminKey,
+          },
+        },
       },
     });
 

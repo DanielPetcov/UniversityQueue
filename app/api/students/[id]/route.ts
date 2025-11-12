@@ -1,7 +1,9 @@
-import prisma from "@/lib/prisma";
-import { UpdateStudentSchema, UpdateUserSchema } from "@/schemas";
 import { NextRequest, NextResponse } from "next/server";
+
 import z from "zod";
+import prisma from "@/lib/prisma";
+
+import { UpdateStudentSchema } from "@/schemas";
 
 export async function PUT(
   req: NextRequest,

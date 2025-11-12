@@ -10,4 +10,5 @@ export const SignUpSchemaStudent = z.object({
 export const SignUpSchemaAdmin = z.object({
   name: z.string(),
   password: z.string(),
+  groupName: z.string(),
 });
