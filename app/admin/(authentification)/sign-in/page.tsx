@@ -1,27 +1,32 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import z from "zod";
+import { toast } from "sonner";
+import { Eye, EyeClosed } from "lucide-react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import { SignInSchemaAdmin } from "@/schemas";
 
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { LabelInputWrapper, ErrorMessage } from "@/components/form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { LabelInputWrapper, ErrorMessage } from "@/components/form";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { useState } from "react";
-import { Eye, EyeClosed } from "lucide-react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { AdminSignInResponse } from "@/interfaces";
+import { useUser } from "@/states";
 
 export default function SignInPageAdmin() {
   const router = useRouter();
+  const { setUserId, setUserName } = useUser();
   const [loading, setLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -41,13 +46,17 @@ export default function SignInPageAdmin() {
     try {
       setLoading(true);
 
-      const response = await fetch("/api/admin/sign-in", {
+      const response = await fetch("/api/admins/sign-in", {
         method: "POST",
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
-        router.replace("/admin");
+        const res: AdminSignInResponse = await response.json();
+        setUserId(res.userId);
+        setUserName(res.userName);
+        toast.success("Succesfully logged in");
+        router.push("/admin");
       } else {
         throw new Error("Failed to login");
       }
@@ -63,9 +72,9 @@ export default function SignInPageAdmin() {
   return (
     <Card>
       <CardHeader>
-        <h1>Sign-in</h1>
+        <h1 className="font-semibold">Sign-in as Admin</h1>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <LabelInputWrapper>
             <Label htmlFor="name">Name</Label>
@@ -103,6 +112,12 @@ export default function SignInPageAdmin() {
             Submit
           </Button>
         </form>
+        <p className="space-x-1 text-xs">
+          <span>or</span>
+          <Link href="/admin/sign-up" className="hover:underline">
+            Sign-up
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );

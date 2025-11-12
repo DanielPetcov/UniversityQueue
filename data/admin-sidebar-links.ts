@@ -11,11 +11,6 @@ import {
 
 export const createLinksAdmin: SidebarLink[] = [
   {
-    href: "/admin/users/new",
-    title: "Create user",
-    icon: UserStar,
-  },
-  {
     href: "/admin/students/new",
     title: "Create student",
     icon: UserRound,
@@ -25,19 +20,9 @@ export const createLinksAdmin: SidebarLink[] = [
     title: "Create course",
     icon: Book,
   },
-  {
-    href: "/admin/groups/new",
-    title: "Create group",
-    icon: BookUser,
-  },
 ];
 
 export const updateLinksAdmin: SidebarLink[] = [
-  {
-    href: "/admin/users/update",
-    title: "Update user",
-    icon: UserStar,
-  },
   {
     href: "/admin/students/update",
     title: "Update student",
@@ -57,11 +42,6 @@ export const updateLinksAdmin: SidebarLink[] = [
 
 export const deleteLinksAdmin: SidebarLink[] = [
   {
-    href: "/admin/users/delete",
-    title: "Delete user",
-    icon: UserMinus2,
-  },
-  {
     href: "/admin/students/delete",
     title: "Delete student",
     icon: UserMinus2,
@@ -70,10 +50,5 @@ export const deleteLinksAdmin: SidebarLink[] = [
     href: "/admin/courses/delete",
     title: "Delete course",
     icon: BookMinus,
-  },
-  {
-    href: "/admin/groups/delete",
-    title: "Delete group",
-    icon: BookX,
   },
 ];

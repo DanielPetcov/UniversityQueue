@@ -84,7 +84,10 @@ export async function POST(req: NextRequest) {
       maxAge: Math.floor((expirationDate.getTime() - Date.now()) / 1000),
     });
 
-    return NextResponse.json(user.id, { status: 200 });
+    return NextResponse.json(
+      { userId: user.id, userName: user.name },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("ADMIN SIGN-IN | POST error: ", error);
     return NextResponse.json({ error: "Could not sign-in" }, { status: 400 });

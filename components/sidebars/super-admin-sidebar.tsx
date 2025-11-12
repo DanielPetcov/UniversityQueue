@@ -6,6 +6,7 @@ import { ChevronUp, Home, LogOut, User2 } from "lucide-react";
 
 import { useUser } from "@/states";
 import { deleteCookie } from "@/actions";
+import { createLinksSuperAdmin } from "@/data";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import SidebarGroupLinks from "../sidebar-group-links";
 
 export function SuperAdminSidebar() {
   const { userName } = useUser();
@@ -42,7 +44,9 @@ export function SuperAdminSidebar() {
           </Link>
         </Button>
       </SidebarHeader>
-      <SidebarContent></SidebarContent>
+      <SidebarContent>
+        <SidebarGroupLinks links={createLinksSuperAdmin} label="Delete" />
+      </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>

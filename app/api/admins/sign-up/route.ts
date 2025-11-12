@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 import z from "zod";
 import prisma from "@/lib/prisma";
-import { SignUpSchemaAdmin } from "@/schemas";
+
 import { generateAdminKey } from "@/actions";
+import { SignUpSchemaAdmin } from "@/schemas";
 import { hashPassword } from "@/auth/hash-password";
 
 export async function POST(req: NextRequest) {
@@ -63,7 +64,10 @@ export async function POST(req: NextRequest) {
       throw new Error("Could not create group");
     }
 
-    return NextResponse.json(admin, { status: 200 });
+    return NextResponse.json(
+      { userId: user.id, userName: user.name },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("ADMIN SIGN-UP | POST error: ", error);
     return NextResponse.json({ error: "Could not sign-up" }, { status: 400 });
