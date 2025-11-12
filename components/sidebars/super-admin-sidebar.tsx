@@ -6,8 +6,6 @@ import { ChevronUp, Home, LogOut, User2 } from "lucide-react";
 
 import { useUser } from "@/states";
 import { deleteCookie } from "@/actions";
-import { createLinksAdmin, deleteLinksAdmin, updateLinksAdmin } from "@/data";
-import SidebarGroupLinks from "@/components/sidebar-group-links";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,7 +24,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-export function AdminSidebar() {
+export function SuperAdminSidebar() {
   const { userName } = useUser();
 
   const ClearToken = async () => {
@@ -44,11 +42,7 @@ export function AdminSidebar() {
           </Link>
         </Button>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroupLinks links={createLinksAdmin} label="Create" />
-        <SidebarGroupLinks links={updateLinksAdmin} label="Update" />
-        <SidebarGroupLinks links={deleteLinksAdmin} label="Delete" />
-      </SidebarContent>
+      <SidebarContent></SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>

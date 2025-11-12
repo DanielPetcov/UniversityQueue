@@ -1,2 +1,3 @@
 export * from "./admin-sidebar";
-export * from "./admin-sidebar-wrapper";
+export * from "./student-sidebar";
+export * from "./super-admin-sidebar";

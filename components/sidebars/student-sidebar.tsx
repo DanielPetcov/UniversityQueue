@@ -1,7 +1,15 @@
 "use client";
 
-import { deleteCookie } from "@/actions";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import { ChevronUp, Database, Home, LogOut, User2 } from "lucide-react";
+
 import { Course } from "@/app/generated/prisma/client";
+import { useUser } from "@/states";
+import { CourseLink } from "@/interfaces";
+import { deleteCookie } from "@/actions";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,19 +29,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { CourseLink } from "@/interfaces";
 
-import { ChevronUp, Database, Home, LogOut, User2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
-interface PublicSidebarProps {
-  userName: string;
-}
-
-export default function PublicSidebar({ userName }: PublicSidebarProps) {
-  const router = useRouter();
+export function StudentSidebar() {
+  const { userName } = useUser();
   const [courses, setCourses] = useState<CourseLink[]>();
 
   useEffect(() => {
@@ -57,7 +55,7 @@ export default function PublicSidebar({ userName }: PublicSidebarProps) {
 
   const ClearToken = async () => {
     await deleteCookie("token");
-    router.refresh();
+    location.reload();
   };
 
   return (

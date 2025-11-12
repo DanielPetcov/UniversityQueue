@@ -1,6 +1,7 @@
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
-import { GetUserIdToken } from "./get-userId-token";
 import prisma from "@/lib/prisma";
+
+import { GetUserIdToken } from "./get-userId-token";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 export async function VerifyRoleUserStudent(
   token: RequestCookie

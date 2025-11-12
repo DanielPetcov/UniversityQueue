@@ -2,11 +2,10 @@
 
 import z from "zod";
 
-import { SignInSchemaPublic } from "@/schemas";
+import { SignInSchemaStudent } from "@/schemas";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { SubmitHandler, useForm } from "react-hook-form";
-import LabelInputWrapper from "@/components/form/label-input-wrapper";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,9 @@ import {
 } from "@/components/ui/input-group";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
-import ErrorMessage from "@/components/form/error-message";
+
+import { LabelInputWrapper, ErrorMessage } from "@/components/form";
+
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -34,9 +35,9 @@ export default function SignInPagePublic() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof SignInSchemaPublic>>();
+  } = useForm<z.infer<typeof SignInSchemaStudent>>();
 
-  const onSubmit: SubmitHandler<z.infer<typeof SignInSchemaPublic>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof SignInSchemaStudent>> = async (
     data
   ) => {
     try {

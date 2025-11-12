@@ -1,4 +1,4 @@
-export default function PublicFooter() {
+export default function Footer() {
   return (
     <div className="border-t p-5 text-center text-xs">
       <span>
