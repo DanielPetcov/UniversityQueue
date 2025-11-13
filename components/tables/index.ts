@@ -1,6 +1,4 @@
 export * from "./data-table";
-export * from "./users/columns";
-export * from "./users/users-table";
 export * from "./students/columns";
 export * from "./students/students-table";
 export * from "./courses/columns";
