@@ -21,7 +21,7 @@ export default function NewCoursePage() {
   const {
     register,
     handleSubmit,
-    reset,
+    resetField,
     setValue,
     setError,
     clearErrors,
@@ -49,7 +49,7 @@ export default function NewCoursePage() {
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        reset();
+        resetField("name");
         toast.success("Course created");
       } else {
         throw new Error("Response was not ok");

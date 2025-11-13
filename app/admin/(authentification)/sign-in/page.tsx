@@ -53,7 +53,6 @@ export default function SignInPageAdmin() {
 
       if (response.ok) {
         const res: AdminSignInResponse = await response.json();
-        console.log(res);
         setUserId(res.userId);
         setUserName(res.userName);
         toast.success("Succesfully logged in");
