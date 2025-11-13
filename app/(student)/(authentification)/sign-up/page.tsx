@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import z from "zod";
 import { toast } from "sonner";
@@ -15,6 +17,7 @@ import { LabelInputWrapper } from "@/components/form";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default function SignUpPageStudent() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit } =
@@ -25,7 +28,14 @@ export default function SignUpPageStudent() {
   ) => {
     try {
       setLoading(true);
-      console.log(data);
+      const response = await fetch(`/api/students/sign-up`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        toast.success("Succesfully created. Now log in.");
+        router.push("/sign-in");
+      }
     } catch (error) {
       console.log(error);
       toast.error("An error occured", {
@@ -39,9 +49,9 @@ export default function SignUpPageStudent() {
   return (
     <Card>
       <CardHeader>
-        <h1>Sign up</h1>
+        <h1 className="font-semibold">Sign up as Student</h1>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <LabelInputWrapper>
             <Label>Name</Label>
@@ -63,6 +73,12 @@ export default function SignUpPageStudent() {
             Submit
           </Button>
         </form>
+        <p className="space-x-1 text-xs">
+          <span>or</span>
+          <Link href="/sign-in" className="hover:underline">
+            Sign-in
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );

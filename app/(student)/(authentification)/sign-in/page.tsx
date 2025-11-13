@@ -1,29 +1,32 @@
 "use client";
 
+import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import z from "zod";
+import { toast } from "sonner";
+import { Eye, EyeClosed } from "lucide-react";
 
+import { useUser } from "@/states";
 import { SignInSchemaStudent } from "@/schemas";
+import { StudentSignInResponse } from "@/interfaces";
 
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { LabelInputWrapper, ErrorMessage } from "@/components/form";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { useState } from "react";
-import { Eye, EyeClosed } from "lucide-react";
-
-import { LabelInputWrapper, ErrorMessage } from "@/components/form";
-
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 export default function SignInPagePublic() {
   const router = useRouter();
+  const { setUserId, setUserName } = useUser();
   const [loading, setLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -43,13 +46,17 @@ export default function SignInPagePublic() {
     try {
       setLoading(true);
 
-      const response = await fetch("/api/public/sign-in", {
+      const response = await fetch("/api/students/sign-in", {
         method: "POST",
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
-        router.replace("/");
+        const res: StudentSignInResponse = await response.json();
+        setUserId(res.userId);
+        setUserName(res.userName);
+        toast.success("Succesfully logged in");
+        router.push("/");
       } else {
         throw new Error("Failed to login");
       }
@@ -65,9 +72,9 @@ export default function SignInPagePublic() {
   return (
     <Card>
       <CardHeader>
-        <h1>Sign-in</h1>
+        <h1 className="font-semibold">Sign-in as Student</h1>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <LabelInputWrapper>
             <Label htmlFor="email">Email</Label>
@@ -105,6 +112,12 @@ export default function SignInPagePublic() {
             Submit
           </Button>
         </form>
+        <p className="space-x-1 text-xs">
+          <span>or</span>
+          <Link href="/sign-up" className="hover:underline">
+            Sign-up
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );

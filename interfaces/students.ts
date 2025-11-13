@@ -9,3 +9,8 @@ export type StudentWithUser = Prisma.StudentGetPayload<{
     };
   };
 }>;
+
+export interface StudentSignInResponse {
+  userId: string;
+  userName: string;
+}

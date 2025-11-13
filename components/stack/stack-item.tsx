@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
+
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 
 interface StackItemProps {
   id: string;
@@ -24,6 +27,7 @@ export function StackItem({
   canDelete,
   index,
 }: StackItemProps) {
+  const [loading, setLoading] = useState(false);
   const shortenedName = userName.split(" ");
   const initials =
     shortenedName.length >= 2
@@ -42,14 +46,22 @@ export function StackItem({
   });
 
   const handleDelete = async () => {
-    const respponse = await fetch(`/api/stacks/${id}/entries/${id}`, {
-      method: "DELETE",
-    });
-    if (respponse.ok) {
-      toast.success("Succesfully deleted");
-      location.reload();
-    } else {
-      toast.error("An error ocurred");
+    try {
+      setLoading(true);
+      const respponse = await fetch(`/api/stacks/${id}/entries/${id}`, {
+        method: "DELETE",
+      });
+      if (respponse.ok) {
+        toast.success("Succesfully deleted");
+        location.reload();
+      } else {
+        throw new Error("An error ocurred");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Could not delete");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -109,6 +121,7 @@ export function StackItem({
               size="sm"
               className="w-full"
               onClick={handleDelete}
+              disabled={loading}
             >
               Delete
             </Button>

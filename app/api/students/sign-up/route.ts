@@ -69,7 +69,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(student, { status: 200 });
+    return NextResponse.json(
+      { userId: user.id, userName: user.name },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("STUDENTS SIGN-UP | POST error: ", error);
     return NextResponse.json({ error: "Could not sign-up" }, { status: 400 });
