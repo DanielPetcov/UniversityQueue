@@ -20,7 +20,7 @@ export const useUser = create<UserState>()(
     }),
     {
       name: "user-info",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

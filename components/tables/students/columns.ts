@@ -11,11 +11,6 @@ const StudentsColumnsSchema = z.object({
       name: z.string(),
     })
     .nullable(),
-  group: z
-    .object({
-      name: z.string(),
-    })
-    .nullable(),
 });
 
 export const studentsColumns: ColumnDef<
@@ -28,9 +23,5 @@ export const studentsColumns: ColumnDef<
   {
     accessorKey: "user.name",
     header: "Username",
-  },
-  {
-    accessorKey: "group.name",
-    header: "Group Name",
   },
 ];

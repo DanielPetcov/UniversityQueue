@@ -39,6 +39,17 @@ export async function GET(
           adminKey: user.admin.adminKey,
         },
       },
+      include: {
+        stack: {
+          select: {
+            _count: {
+              select: {
+                stackEntries: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return NextResponse.json(courses, { status: 200 });

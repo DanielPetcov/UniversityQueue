@@ -25,5 +25,8 @@ export async function SessionWrapperAdmin({
   if (!valid) {
     redirect("/admin/sign-in");
   }
+
+  console.log("everything is ok", token);
+
   return <>{children}</>;
 }
