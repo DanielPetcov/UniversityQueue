@@ -1,0 +1,112 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../app/generated/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+  SUPER_ADMIN
+}
+
+model User {
+  id       String   @id @default(cuid())
+  role     UserRole @default(STUDENT)
+  name     String   @unique
+  password String
+
+  admin    Admin?
+  student  Student?
+  sessions Session[]
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  adminKey String @unique
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  group Group?
+}
+
+model Student {
+  id    String @id @default(cuid())
+  email String @unique
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  stackEntries StackEntry[]
+}
+
+model Group {
+  id   String @id @default(cuid())
+  name String
+
+  adminKey String @unique
+  admin    Admin  @relation(fields: [adminKey], references: [adminKey], onDelete: Cascade)
+
+  students Student[]
+  courses  Course[]
+}
+
+model Course {
+  id   String @id @default(cuid())
+  name String
+
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  stack Stack?
+}
+
+model Stack {
+  id String @id @default(cuid())
+
+  courseId String @unique
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  stackEntries StackEntry[]
+}
+
+model StackEntry {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stackId String
+  stack   Stack  @relation(fields: [stackId], references: [id], onDelete: Cascade)
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  secretHash String
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
