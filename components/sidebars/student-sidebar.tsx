@@ -16,6 +16,7 @@ import { Course } from "@/app/generated/prisma/client";
 import { useUser } from "@/states";
 import { CourseLink } from "@/interfaces";
 import { deleteCookie } from "@/actions";
+import { useSidebar } from "@/components/ui/sidebar";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -45,6 +46,7 @@ import {
 import { StudentSettings } from "./student-settings";
 
 export function StudentSidebar() {
+  const { setOpenMobile } = useSidebar();
   const { userName, userId } = useUser();
   const [openDialog, setOpenDialog] = useState(false);
   const [courses, setCourses] = useState<CourseLink[]>();
@@ -92,7 +94,10 @@ export function StudentSidebar() {
                 courses.map((course) => (
                   <SidebarMenuItem key={course.title}>
                     <SidebarMenuButton asChild>
-                      <Link href={course.href}>
+                      <Link
+                        href={course.href}
+                        onClick={() => setOpenMobile(false)}
+                      >
                         <course.icon />
                         <span>{course.title}</span>
                       </Link>

@@ -25,3 +25,9 @@ export const DeleteStudentSchema = z.object({
 export const SubscribeSchema = z.object({
   comment: z.string().optional(),
 });
+
+export const UpdatePasswordStudentSchema = z.object({
+  userId: z.string(),
+  currentPassword: z.string(),
+  newPassword: z.string(),
+});
