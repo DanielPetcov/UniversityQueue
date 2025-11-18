@@ -4,6 +4,7 @@ interface StackProps {
   entries: {
     id: string;
     userName: string;
+    label: string | null;
     createdAt: Date;
     canDelete: boolean;
   }[];

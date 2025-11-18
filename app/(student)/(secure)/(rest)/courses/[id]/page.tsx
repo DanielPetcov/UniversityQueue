@@ -50,6 +50,7 @@ export default async function CoursePage({
         select: {
           id: true,
           createdAt: true,
+          label: true,
           student: {
             select: {
               user: {
@@ -72,6 +73,7 @@ export default async function CoursePage({
   const stackEntries = stack.stackEntries.map((e) => ({
     id: e.id,
     userName: e.student.user.name,
+    label: e.label,
     createdAt: e.createdAt,
     canDelete: student.userId === e.student.user.id,
   }));

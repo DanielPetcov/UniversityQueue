@@ -160,6 +160,7 @@ exports.Prisma.StackScalarFieldEnum = {
 
 exports.Prisma.StackEntryScalarFieldEnum = {
   id: 'id',
+  label: 'label',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   stackId: 'stackId',
@@ -182,6 +183,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.UserRole = exports.$Enums.UserRole = {
   STUDENT: 'STUDENT',

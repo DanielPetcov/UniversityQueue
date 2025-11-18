@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="71.936" height="71.936"></bx:grid>
+  </defs>
+  <path d="M 241.789 136.19 Q 252.417 114.934 263.045 136.19 L 328.194 266.488 Q 338.822 287.744 317.566 287.744 L 187.268 287.744 Q 166.012 287.744 176.64 266.488 Z" bx:shape="triangle 166.012 114.934 172.81 172.81 0.5 0.123 1@d251f3d7" style="fill: color(a98-rgb 0.455 0.579 0.916); stroke: color(a98-rgb 0.241 0.309 0.494);"></path>
+</svg>

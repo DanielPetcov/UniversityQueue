@@ -21,3 +21,7 @@ export const UpdateStudentSchema = z.object({
 export const DeleteStudentSchema = z.object({
   id: z.string(),
 });
+
+export const SubscribeSchema = z.object({
+  comment: z.string().optional(),
+});

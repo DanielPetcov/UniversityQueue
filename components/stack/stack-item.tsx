@@ -15,6 +15,7 @@ import {
 interface StackItemProps {
   id: string;
   userName: string;
+  label: string | null;
   createdAt: Date;
   canDelete: boolean;
   index: number;
@@ -23,6 +24,7 @@ interface StackItemProps {
 export function StackItem({
   id,
   userName,
+  label,
   createdAt,
   canDelete,
   index,
@@ -48,10 +50,10 @@ export function StackItem({
   const handleDelete = async () => {
     try {
       setLoading(true);
-      const respponse = await fetch(`/api/stacks/${id}/entries/${id}`, {
+      const response = await fetch(`/api/stacks/${id}/entries/${id}`, {
         method: "DELETE",
       });
-      if (respponse.ok) {
+      if (response.ok) {
         toast.success("Succesfully deleted");
         location.reload();
       } else {
@@ -99,8 +101,11 @@ export function StackItem({
         align="center"
         className="w-56 rounded-xl border border-neutral-200 shadow-lg bg-white/95 backdrop-blur-md p-3 space-y-3"
       >
-        <div className="text-sm lg:text-sm font-medium text-neutral-800">
-          {userName}
+        <div className="flex items-center justify-between gap-2">
+          <div className="text-sm lg:text-sm font-medium text-neutral-800">
+            {userName}
+          </div>
+          <span className="text-sm font-light">{label}</span>
         </div>
 
         <div className="text-xs lg:text-sm text-neutral-500 border-t border-neutral-100 pt-2 space-y-1">

@@ -1,5 +1,9 @@
-import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+
+import z from "zod";
+import prisma from "@/lib/prisma";
+
+import { SubscribeSchema } from "@/schemas";
 
 export async function POST(
   req: NextRequest,
@@ -7,12 +11,16 @@ export async function POST(
 ) {
   try {
     const { stackId } = await params;
-    const { studentId } = await req.json();
-
+    const {
+      studentId,
+      comment,
+    }: z.infer<typeof SubscribeSchema> & { studentId: string } =
+      await req.json();
     const stackEntry = await prisma.stackEntry.create({
       data: {
         stackId: stackId,
         studentId: studentId,
+        label: comment,
       },
     });
 

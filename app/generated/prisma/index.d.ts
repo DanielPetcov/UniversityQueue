@@ -8112,6 +8112,7 @@ export namespace Prisma {
 
   export type StackEntryMinAggregateOutputType = {
     id: string | null
+    label: string | null
     createdAt: Date | null
     updatedAt: Date | null
     stackId: string | null
@@ -8120,6 +8121,7 @@ export namespace Prisma {
 
   export type StackEntryMaxAggregateOutputType = {
     id: string | null
+    label: string | null
     createdAt: Date | null
     updatedAt: Date | null
     stackId: string | null
@@ -8128,6 +8130,7 @@ export namespace Prisma {
 
   export type StackEntryCountAggregateOutputType = {
     id: number
+    label: number
     createdAt: number
     updatedAt: number
     stackId: number
@@ -8138,6 +8141,7 @@ export namespace Prisma {
 
   export type StackEntryMinAggregateInputType = {
     id?: true
+    label?: true
     createdAt?: true
     updatedAt?: true
     stackId?: true
@@ -8146,6 +8150,7 @@ export namespace Prisma {
 
   export type StackEntryMaxAggregateInputType = {
     id?: true
+    label?: true
     createdAt?: true
     updatedAt?: true
     stackId?: true
@@ -8154,6 +8159,7 @@ export namespace Prisma {
 
   export type StackEntryCountAggregateInputType = {
     id?: true
+    label?: true
     createdAt?: true
     updatedAt?: true
     stackId?: true
@@ -8235,6 +8241,7 @@ export namespace Prisma {
 
   export type StackEntryGroupByOutputType = {
     id: string
+    label: string | null
     createdAt: Date
     updatedAt: Date
     stackId: string
@@ -8260,6 +8267,7 @@ export namespace Prisma {
 
   export type StackEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    label?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stackId?: boolean
@@ -8270,6 +8278,7 @@ export namespace Prisma {
 
   export type StackEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    label?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stackId?: boolean
@@ -8280,6 +8289,7 @@ export namespace Prisma {
 
   export type StackEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    label?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stackId?: boolean
@@ -8290,13 +8300,14 @@ export namespace Prisma {
 
   export type StackEntrySelectScalar = {
     id?: boolean
+    label?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stackId?: boolean
     studentId?: boolean
   }
 
-  export type StackEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "stackId" | "studentId", ExtArgs["result"]["stackEntry"]>
+  export type StackEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "label" | "createdAt" | "updatedAt" | "stackId" | "studentId", ExtArgs["result"]["stackEntry"]>
   export type StackEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     stack?: boolean | StackDefaultArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
@@ -8318,6 +8329,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      label: string | null
       createdAt: Date
       updatedAt: Date
       stackId: string
@@ -8748,6 +8760,7 @@ export namespace Prisma {
    */
   interface StackEntryFieldRefs {
     readonly id: FieldRef<"StackEntry", 'String'>
+    readonly label: FieldRef<"StackEntry", 'String'>
     readonly createdAt: FieldRef<"StackEntry", 'DateTime'>
     readonly updatedAt: FieldRef<"StackEntry", 'DateTime'>
     readonly stackId: FieldRef<"StackEntry", 'String'>
@@ -10295,6 +10308,7 @@ export namespace Prisma {
 
   export const StackEntryScalarFieldEnum: {
     id: 'id',
+    label: 'label',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     stackId: 'stackId',
@@ -10329,6 +10343,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -10702,6 +10724,7 @@ export namespace Prisma {
     OR?: StackEntryWhereInput[]
     NOT?: StackEntryWhereInput | StackEntryWhereInput[]
     id?: StringFilter<"StackEntry"> | string
+    label?: StringNullableFilter<"StackEntry"> | string | null
     createdAt?: DateTimeFilter<"StackEntry"> | Date | string
     updatedAt?: DateTimeFilter<"StackEntry"> | Date | string
     stackId?: StringFilter<"StackEntry"> | string
@@ -10712,6 +10735,7 @@ export namespace Prisma {
 
   export type StackEntryOrderByWithRelationInput = {
     id?: SortOrder
+    label?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stackId?: SortOrder
@@ -10725,6 +10749,7 @@ export namespace Prisma {
     AND?: StackEntryWhereInput | StackEntryWhereInput[]
     OR?: StackEntryWhereInput[]
     NOT?: StackEntryWhereInput | StackEntryWhereInput[]
+    label?: StringNullableFilter<"StackEntry"> | string | null
     createdAt?: DateTimeFilter<"StackEntry"> | Date | string
     updatedAt?: DateTimeFilter<"StackEntry"> | Date | string
     stackId?: StringFilter<"StackEntry"> | string
@@ -10735,6 +10760,7 @@ export namespace Prisma {
 
   export type StackEntryOrderByWithAggregationInput = {
     id?: SortOrder
+    label?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stackId?: SortOrder
@@ -10749,6 +10775,7 @@ export namespace Prisma {
     OR?: StackEntryScalarWhereWithAggregatesInput[]
     NOT?: StackEntryScalarWhereWithAggregatesInput | StackEntryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"StackEntry"> | string
+    label?: StringNullableWithAggregatesFilter<"StackEntry"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"StackEntry"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"StackEntry"> | Date | string
     stackId?: StringWithAggregatesFilter<"StackEntry"> | string
@@ -11101,6 +11128,7 @@ export namespace Prisma {
 
   export type StackEntryCreateInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stack: StackCreateNestedOneWithoutStackEntriesInput
@@ -11109,6 +11137,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedCreateInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stackId: string
@@ -11117,6 +11146,7 @@ export namespace Prisma {
 
   export type StackEntryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stack?: StackUpdateOneRequiredWithoutStackEntriesNestedInput
@@ -11125,6 +11155,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stackId?: StringFieldUpdateOperationsInput | string
@@ -11133,6 +11164,7 @@ export namespace Prisma {
 
   export type StackEntryCreateManyInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stackId: string
@@ -11141,12 +11173,14 @@ export namespace Prisma {
 
   export type StackEntryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StackEntryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stackId?: StringFieldUpdateOperationsInput | string
@@ -11449,6 +11483,21 @@ export namespace Prisma {
     courseId?: SortOrder
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -11470,8 +11519,14 @@ export namespace Prisma {
     isNot?: StudentWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type StackEntryCountOrderByAggregateInput = {
     id?: SortOrder
+    label?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stackId?: SortOrder
@@ -11480,6 +11535,7 @@ export namespace Prisma {
 
   export type StackEntryMaxOrderByAggregateInput = {
     id?: SortOrder
+    label?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stackId?: SortOrder
@@ -11488,10 +11544,29 @@ export namespace Prisma {
 
   export type StackEntryMinOrderByAggregateInput = {
     id?: SortOrder
+    label?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stackId?: SortOrder
     studentId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -11974,6 +12049,10 @@ export namespace Prisma {
     connect?: StudentWhereUniqueInput
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -12067,6 +12146,20 @@ export namespace Prisma {
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -12076,6 +12169,34 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -12367,6 +12488,7 @@ export namespace Prisma {
 
   export type StackEntryCreateWithoutStudentInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stack: StackCreateNestedOneWithoutStackEntriesInput
@@ -12374,6 +12496,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedCreateWithoutStudentInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stackId: string
@@ -12464,6 +12587,7 @@ export namespace Prisma {
     OR?: StackEntryScalarWhereInput[]
     NOT?: StackEntryScalarWhereInput | StackEntryScalarWhereInput[]
     id?: StringFilter<"StackEntry"> | string
+    label?: StringNullableFilter<"StackEntry"> | string | null
     createdAt?: DateTimeFilter<"StackEntry"> | Date | string
     updatedAt?: DateTimeFilter<"StackEntry"> | Date | string
     stackId?: StringFilter<"StackEntry"> | string
@@ -12706,6 +12830,7 @@ export namespace Prisma {
 
   export type StackEntryCreateWithoutStackInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     student: StudentCreateNestedOneWithoutStackEntriesInput
@@ -12713,6 +12838,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedCreateWithoutStackInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     studentId: string
@@ -12929,6 +13055,7 @@ export namespace Prisma {
 
   export type StackEntryCreateManyStudentInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stackId: string
@@ -12936,6 +13063,7 @@ export namespace Prisma {
 
   export type StackEntryUpdateWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stack?: StackUpdateOneRequiredWithoutStackEntriesNestedInput
@@ -12943,6 +13071,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedUpdateWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stackId?: StringFieldUpdateOperationsInput | string
@@ -12950,6 +13079,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedUpdateManyWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stackId?: StringFieldUpdateOperationsInput | string
@@ -13005,6 +13135,7 @@ export namespace Prisma {
 
   export type StackEntryCreateManyStackInput = {
     id?: string
+    label?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     studentId: string
@@ -13012,6 +13143,7 @@ export namespace Prisma {
 
   export type StackEntryUpdateWithoutStackInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     student?: StudentUpdateOneRequiredWithoutStackEntriesNestedInput
@@ -13019,6 +13151,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedUpdateWithoutStackInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentId?: StringFieldUpdateOperationsInput | string
@@ -13026,6 +13159,7 @@ export namespace Prisma {
 
   export type StackEntryUncheckedUpdateManyWithoutStackInput = {
     id?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentId?: StringFieldUpdateOperationsInput | string
