@@ -70,7 +70,7 @@ export default function SignInPageAdmin() {
     }
   };
   return (
-    <Card>
+    <Card className="min-w-xs">
       <CardHeader>
         <h1 className="font-semibold">Sign-in as Admin</h1>
       </CardHeader>

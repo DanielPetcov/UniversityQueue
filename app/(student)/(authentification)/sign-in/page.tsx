@@ -70,7 +70,7 @@ export default function SignInPagePublic() {
     }
   };
   return (
-    <Card>
+    <Card className="min-w-xs">
       <CardHeader>
         <h1 className="font-semibold">Sign-in as Student</h1>
       </CardHeader>

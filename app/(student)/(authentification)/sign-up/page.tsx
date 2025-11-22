@@ -47,7 +47,7 @@ export default function SignUpPageStudent() {
   };
 
   return (
-    <Card>
+    <Card className="min-w-xs">
       <CardHeader>
         <h1 className="font-semibold">Sign up as Student</h1>
       </CardHeader>
